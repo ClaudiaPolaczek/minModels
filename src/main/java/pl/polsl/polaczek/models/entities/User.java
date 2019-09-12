@@ -16,14 +16,16 @@ import javax.validation.constraints.Size;
 public class User{
 
     @Id
+    @NonNull
+    @Getter
     @NotBlank
-    @Size(max = 64)
     @Column(length = 64)
     private final String username;
 
-    @JsonIgnore
+    @NonNull
     @NotBlank
-    @Size(max = 64)
+    @Setter
+    @Getter
     @Column(length = 64)
     private String password;
 

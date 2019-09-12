@@ -15,8 +15,12 @@ public class Image {
     @GeneratedValue
     private Long id;
 
+    @NonNull
+    @ManyToOne
+    private Portfolio portfolio;
+
     @Lob
-    @Column(name="BOOK_IMAGE", nullable=false, columnDefinition="mediumblob")
+    @Column(name="IMAGE", nullable=false, columnDefinition="mediumblob")
     private byte[] image;
 
     @NonNull
@@ -27,8 +31,4 @@ public class Image {
     private void setDate() {
         addedDate = LocalDateTime.now();
     }
-
-    @NonNull
-    @ManyToOne
-    private Portfolio portfolio;
 }

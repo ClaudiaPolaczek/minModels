@@ -1,7 +1,8 @@
 package pl.polsl.polaczek.models.entities;
 
-public enum MeetingStatus {
+public enum PhotoShootStatus {
     CREATED,
     ACCEPTED,
+    CANCELED,
     DONE
 }

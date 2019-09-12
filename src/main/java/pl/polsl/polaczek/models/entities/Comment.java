@@ -16,15 +16,15 @@ public class Comment {
     private Long id;
 
     @NonNull
+    @ManyToOne
+    private User user;
+
+    @NonNull
     private Integer rating;
 
     @NonNull
     @Lob
     private String content;
-
-    @NonNull
-    @ManyToOne
-    private User user;
 
     @NonNull
     private LocalDateTime  addedDate;
