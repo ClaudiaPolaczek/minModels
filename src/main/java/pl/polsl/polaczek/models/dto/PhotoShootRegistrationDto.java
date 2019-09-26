@@ -16,17 +16,24 @@ public class PhotoShootRegistrationDto {
     @NotNull
     private Long photographerId;
 
+    @NotNull
     private String city;
+
+    @NotNull
     private String street;
+
+    @NotNull
     private String houseNumber;
 
+    @NotNull
     private String topic;
-    private String notes;
 
+    @NotNull
+    private String notes;
 
     @NotNull
     private LocalDateTime meetingDate;
 
-    @NonNull
+    @NotNull
     private Duration duration;
 }

@@ -4,5 +4,5 @@ public enum PhotoShootStatus {
     CREATED,
     ACCEPTED,
     CANCELED,
-    DONE
+    END
 }

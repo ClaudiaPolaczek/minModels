@@ -29,6 +29,7 @@ public class PhotoShoot {
     @ManyToOne
     private Model model;
 
+    @NonNull
     @NotBlank
     @Column(nullable = false)
     private PhotoShootStatus photoShootStatus;
