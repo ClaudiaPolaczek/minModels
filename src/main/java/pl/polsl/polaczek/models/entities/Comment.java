@@ -17,7 +17,11 @@ public class Comment {
 
     @NonNull
     @ManyToOne
-    private User user;
+    private User ratingUser;
+
+    @NonNull
+    @ManyToOne
+    private User ratedUser;
 
     @NonNull
     private Integer rating;
@@ -26,7 +30,7 @@ public class Comment {
     @Lob
     private String content;
 
-    @NonNull
+    @Column(nullable = false)
     private LocalDateTime  addedDate;
 
     @PrePersist

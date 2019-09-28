@@ -2,7 +2,6 @@ package pl.polsl.polaczek.models.services;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.ArgumentMatchers.any;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -54,7 +53,7 @@ public class PhotoShootServiceTest {
             30,'M', "Country", "City", "987654321");
 
     private PhotoShoot photoShoot= new PhotoShoot(photographer, model, PhotoShootStatus.CREATED, "topic", "notes",
-            LocalDateTime.of(2020,01,30, 12, 00), Duration.ofHours(1),
+            LocalDateTime.of(2020,1,30, 12, 0), Duration.ofHours(1),
             "City", "Street", "1");
 
     private PhotoShootRegistrationDto photoShootRegistrationDto = new PhotoShootRegistrationDto();

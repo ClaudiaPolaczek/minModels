@@ -29,7 +29,7 @@ public class User{
     @Column(length = 64)
     private String password;
 
-    @NotNull
+    @NonNull
     @Column(nullable = false)
     private final Role role;
 
