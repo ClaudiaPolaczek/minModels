@@ -76,7 +76,7 @@ public class CommentService {
     }
 
     public void delete(@NonNull Long id){
-        Comment comment =  commentRepository.findById(id).orElseThrow(()
+        commentRepository.findById(id).orElseThrow(()
                 -> new EntityDoesNotExistException("Comment","id",id.toString()));
 
         commentRepository.deleteById(id);

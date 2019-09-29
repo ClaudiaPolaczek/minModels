@@ -6,9 +6,8 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @NoArgsConstructor(force = true)
@@ -32,5 +31,4 @@ public class User{
     @NonNull
     @Column(nullable = false)
     private final Role role;
-
 }

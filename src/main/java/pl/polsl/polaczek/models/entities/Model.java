@@ -27,26 +27,6 @@ public class Model {
 
     @NonNull
     @NotBlank
-    @Column(nullable = false, length =  64)
-    @Size(max = 64)
-    private String name;
-
-    @NonNull
-    @NotBlank
-    @Column(nullable = false, length = 64)
-    @Size(max = 64)
-    private String surname;
-
-    @NonNull
-    @NotBlank
-    private Integer age;
-
-    @NonNull
-    @NotBlank
-    private Character gender;
-
-    @NonNull
-    @NotBlank
     @Column(nullable = false, length = 64)
     @Size(max = 64)
     private String eyesColor;
@@ -57,21 +37,7 @@ public class Model {
     @Size(max = 64)
     private String hairColor;
 
+    @OneToOne(cascade = CascadeType.ALL)
     @NonNull
-    @NotBlank
-    @Column(nullable = false, length = 32)
-    @Size(max = 32)
-    private String country;
-
-    @NonNull
-    @NotBlank
-    @Column(nullable = false, length = 32)
-    @Size(max = 32)
-    private String city;
-
-    @NonNull
-    @NotBlank
-    @Column(nullable = false, length = 16)
-    @Size(min = 9, max = 16)
-    private String phoneNumber;
+    private Survey survey;
 }

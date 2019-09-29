@@ -1,6 +1,7 @@
 package pl.polsl.polaczek.models.dto;
 
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.validation.constraints.NotBlank;
 
@@ -20,10 +21,16 @@ public class NewUserDto {
     private String lastName;
 
     @NotBlank
+    private Integer age;
+
+    @NotBlank
+    private Character gender;
+
+    @NotBlank
     private String country;
 
     @NotBlank
-    private String region;
+    private String city;
 
     @NotBlank
     private String phoneNumber;

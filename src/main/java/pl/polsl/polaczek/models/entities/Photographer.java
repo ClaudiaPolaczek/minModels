@@ -25,39 +25,7 @@ public class Photographer {
     @OneToOne
     private User user;
 
+    @OneToOne(cascade = CascadeType.ALL)
     @NonNull
-    @NotBlank
-    @Column(nullable = false, length =  64)
-    @Size(max = 64)
-    private String name;
-
-    @NonNull
-    @NotBlank
-    @Column(nullable = false, length = 64)
-    @Size(max = 64)
-    private String surname;
-
-    @NonNull
-    private Integer age;
-
-    @NonNull
-    private Character gender;
-
-    @NonNull
-    @NotBlank
-    @Column(nullable = false, length = 32)
-    @Size(max = 32)
-    private String country;
-
-    @NonNull
-    @NotBlank
-    @Column(nullable = false, length = 32)
-    @Size(max = 32)
-    private String city;
-
-    @NonNull
-    @NotBlank
-    @Column(nullable = false, length = 16)
-    @Size(min = 9, max = 16)
-    private String phoneNumber;
+    private Survey survey;
 }

@@ -18,10 +18,7 @@ import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotoShootRepository;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dto.PhotoShootRegistrationDto;
-import pl.polsl.polaczek.models.entities.Model;
-import pl.polsl.polaczek.models.entities.PhotoShoot;
-import pl.polsl.polaczek.models.entities.PhotoShootStatus;
-import pl.polsl.polaczek.models.entities.Photographer;
+import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
@@ -46,11 +43,15 @@ public class PhotoShootServiceTest {
     @MockBean
     private PhotographerRepository photographerRepository;
 
-    private Model model = new Model("ModelName", "ModelSurname",20, 'W',
-            "blue", "brown", "Country", "City", "123456789");
+    private Survey modelSurvey = new Survey("ModelName", "ModelSurname",20, 'W',
+            "Country", "City", "123456789");
 
-    private Photographer photographer = new Photographer("PhotographerName", "PhotographerSurname",
-            30,'M', "Country", "City", "987654321");
+    private Model model = new Model("blue", "brown",modelSurvey);
+
+    private Survey photographerSurvey = new Survey("ModelName", "ModelSurname",20, 'W',
+            "Country", "City", "123456789");
+
+    private Photographer photographer = new Photographer(photographerSurvey);
 
     private PhotoShoot photoShoot= new PhotoShoot(photographer, model, PhotoShootStatus.CREATED, "topic", "notes",
             LocalDateTime.of(2020,1,30, 12, 0), Duration.ofHours(1),
