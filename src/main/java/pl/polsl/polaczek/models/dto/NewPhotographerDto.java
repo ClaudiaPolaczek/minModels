@@ -6,7 +6,7 @@ import lombok.NonNull;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class NewUserDto {
+public class NewPhotographerDto {
 
     @NotBlank
     private String username;

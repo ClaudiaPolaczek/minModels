@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.SurveyRepository;
-import pl.polsl.polaczek.models.dao.UserRepository;
-import pl.polsl.polaczek.models.dto.NewUserDto;
+import pl.polsl.polaczek.models.dto.NewPhotographerDto;
 import pl.polsl.polaczek.models.entities.Photographer;
 import pl.polsl.polaczek.models.entities.Role;
 import pl.polsl.polaczek.models.entities.Survey;
@@ -54,7 +53,7 @@ public class PhotographerService {
         return photographerRepository.findAll();
     }
 
-    public Photographer add(@NonNull NewUserDto dto){
+    public Photographer add(@NonNull NewPhotographerDto dto){
 
         final User user = userService.create(dto.getUsername(),
                 passwordEncoder.encode(dto.getPassword()), Role.PHOTOGRAPHER);
@@ -79,7 +78,7 @@ public class PhotographerService {
     public void delete(@NonNull Long id){
 
         photographerRepository.findById(id).orElseThrow(()
-                -> new EntityDoesNotExistException("Comment","id",id.toString()));
+                -> new EntityDoesNotExistException("Photographer","id",id.toString()));
 
         photographerRepository.deleteById(id);
     }

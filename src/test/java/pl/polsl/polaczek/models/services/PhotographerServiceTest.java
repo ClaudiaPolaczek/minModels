@@ -7,12 +7,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.parameters.P;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.SurveyRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
-import pl.polsl.polaczek.models.dto.NewUserDto;
+import pl.polsl.polaczek.models.dto.NewPhotographerDto;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
@@ -48,7 +47,7 @@ public class PhotographerServiceTest {
 
     private Photographer photographer = new Photographer(survey);
 
-    private NewUserDto newUserDto = new NewUserDto();
+    private NewPhotographerDto newPhotographerDto = new NewPhotographerDto();
 
     private static final Long NOT_EXISTING_PHOTOGRAPHER_ID = 10L;
     private static final Long NOT_EXISTING_SURVEY_ID = 20L;
@@ -69,15 +68,15 @@ public class PhotographerServiceTest {
 
         given(photographerRepository.save(photographer)).willReturn(photographer);
 
-        newUserDto.setUsername(user.getUsername());
-        newUserDto.setPassword(user.getPassword());
-        newUserDto.setAge(survey.getAge());
-        newUserDto.setGender(survey.getGender());
-        newUserDto.setFirstName(survey.getFirstName());
-        newUserDto.setLastName(survey.getLastName());
-        newUserDto.setCountry(survey.getCountry());
-        newUserDto.setCity(survey.getCity());
-        newUserDto.setPhoneNumber(survey.getPhoneNumber());
+        newPhotographerDto.setUsername(user.getUsername());
+        newPhotographerDto.setPassword(user.getPassword());
+        newPhotographerDto.setAge(survey.getAge());
+        newPhotographerDto.setGender(survey.getGender());
+        newPhotographerDto.setFirstName(survey.getFirstName());
+        newPhotographerDto.setLastName(survey.getLastName());
+        newPhotographerDto.setCountry(survey.getCountry());
+        newPhotographerDto.setCity(survey.getCity());
+        newPhotographerDto.setPhoneNumber(survey.getPhoneNumber());
     }
 
     @Test
@@ -86,7 +85,7 @@ public class PhotographerServiceTest {
         photographer.setId(null);
 
         //when
-        Photographer created = photographerService.add(newUserDto);
+        Photographer created = photographerService.add(newPhotographerDto);
 
         //then
         assertThat(created).isEqualTo(photographer);
@@ -99,7 +98,7 @@ public class PhotographerServiceTest {
         survey.setId(null);
 
         //when
-        Photographer photographer = photographerService.add(newUserDto);
+        Photographer photographer = photographerService.add(newPhotographerDto);
 
         //then
         verify(surveyRepository).save(survey);
@@ -152,7 +151,6 @@ public class PhotographerServiceTest {
                 new Photographer(survey),
                 new Photographer(survey)
         );
-
 
         given(photographerRepository.findAll()).willReturn(photographers);
 

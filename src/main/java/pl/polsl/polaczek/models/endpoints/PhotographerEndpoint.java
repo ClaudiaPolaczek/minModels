@@ -3,7 +3,7 @@ package pl.polsl.polaczek.models.endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import pl.polsl.polaczek.models.dto.NewUserDto;
+import pl.polsl.polaczek.models.dto.NewPhotographerDto;
 import pl.polsl.polaczek.models.entities.Photographer;
 import pl.polsl.polaczek.models.services.PhotographerService;
 
@@ -37,12 +37,12 @@ public class PhotographerEndpoint {
     }
 
     @PostMapping
-    public Photographer add(@Valid @RequestBody NewUserDto newPhotographer){
+    public Photographer add(@Valid @RequestBody NewPhotographerDto newPhotographer){
         return photographerService.add(newPhotographer);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteComment(@PathVariable Long id){
+    public void deletePhotographer(@PathVariable Long id){
         photographerService.delete(id);
     }
 }
