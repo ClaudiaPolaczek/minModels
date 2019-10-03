@@ -1,9 +1,12 @@
 package pl.polsl.polaczek.models.entities;
 
 import lombok.*;
+import org.springframework.content.commons.annotations.ContentId;
+import org.springframework.content.commons.annotations.ContentLength;
+import org.springframework.content.commons.annotations.MimeType;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.Size;
 
 @Entity
 @Data
@@ -19,16 +22,16 @@ public class Image {
     @ManyToOne
     private Portfolio portfolio;
 
-    @Lob
-    @Column(name="IMAGE", nullable=false, columnDefinition="mediumblob")
-    private byte[] image;
+    @Column(length =  64)
+    @Size(max = 64)
+    private String title;
 
-    @NonNull
-    @Column(nullable = false)
-    private LocalDateTime addedDate;
+    @ContentId
+    private String contentId;
 
-    @PrePersist
-    private void setDate() {
-        addedDate = LocalDateTime.now();
-    }
+    @ContentLength
+    private Long contentLength;
+
+    @MimeType
+    private String mimeType = "text/plain";
 }

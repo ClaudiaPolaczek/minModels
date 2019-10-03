@@ -22,10 +22,7 @@ public class Portfolio {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "portfolio")
-    private Set<Image> images;
-
-    @NotBlank
+    @NonNull
     @Column(nullable = false, length =  64)
     @Size(max = 64)
     private String name;
@@ -34,7 +31,6 @@ public class Portfolio {
     @Size(max = 8000)
     private String description;
 
-    @NonNull
     @Column(nullable = false)
     private LocalDateTime addedDate;
 
@@ -42,6 +38,4 @@ public class Portfolio {
     private void setDate() {
         addedDate = LocalDateTime.now();
     }
-
-
 }

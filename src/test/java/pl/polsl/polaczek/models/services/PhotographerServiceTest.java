@@ -39,6 +39,9 @@ public class PhotographerServiceTest {
     @MockBean
     private UserRepository userRepository;
 
+    @MockBean
+    private SurveyService surveyService;
+
 
     private User user = new User("Username", "Password", Role.PHOTOGRAPHER);
 

@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.dto.CommentDto;
 import pl.polsl.polaczek.models.entities.Comment;
-import pl.polsl.polaczek.models.entities.PhotoShoot;
 import pl.polsl.polaczek.models.services.CommentService;
 
 import javax.validation.Valid;
@@ -18,7 +17,9 @@ public class CommentEndpoint {
     private final CommentService commentService;
 
     @Autowired
-    CommentEndpoint(CommentService commentService) { this.commentService = commentService; }
+    CommentEndpoint(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @GetMapping("/{ratingUserUsername}/{ratedUserUsername}")
     public List<Comment> get(@PathVariable String ratingUserUsername, @PathVariable String ratedUserUsername){

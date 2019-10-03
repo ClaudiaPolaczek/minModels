@@ -62,7 +62,7 @@ public class PhotographerService {
             throw new BadRequestException("Photographer", "gender", dto.getGender().toString(),
                     "Photographer's gender should be either W or M");
 
-        //final Survey survey = surveyService.add(dto);
+       // final Survey survey = surveyService.add(dto);
 
         final Survey survey = new Survey(dto.getFirstName(), dto.getLastName(), dto.getAge(),
                 dto.getGender(), dto.getCountry(), dto.getCity(), dto.getPhoneNumber());

@@ -1,6 +1,7 @@
 package pl.polsl.polaczek.models.services;
 
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.polaczek.models.dao.CommentRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
@@ -18,7 +19,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 
-
+    @Autowired
     public CommentService(final CommentRepository commentRepository, final UserRepository userRepository){
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
@@ -27,10 +28,10 @@ public class CommentService {
     public List<Comment> get( String ratingUserUsername , String ratedUserUsername){
 
         userRepository.findByUsername(ratingUserUsername).orElseThrow(()
-                -> new EntityDoesNotExistException("User","id",ratingUserUsername));
+                -> new EntityDoesNotExistException("User","username",ratingUserUsername));
 
         userRepository.findByUsername(ratedUserUsername).orElseThrow(()
-                -> new EntityDoesNotExistException("User","id",ratedUserUsername));
+                -> new EntityDoesNotExistException("User","username",ratedUserUsername));
 
         return commentRepository.findAllByRatingUserUsernameAndRatedUserUsername(ratingUserUsername,ratedUserUsername);
     }

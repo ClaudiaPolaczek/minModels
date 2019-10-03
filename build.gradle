@@ -26,6 +26,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    compile "com.github.paulcwarren:spring-content-jpa-boot-starter:0.11.0"
+    compile "com.github.paulcwarren:spring-content-fs-boot-starter:0.11.0"
+    compile "com.github.paulcwarren:spring-content-rest-boot-starter:0.11.0"
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'

@@ -1,14 +1,17 @@
 package pl.polsl.polaczek.models.dto;
 
 import lombok.Data;
-import lombok.NonNull;
+
+import javax.validation.constraints.NotNull;
 
 @Data
 public class PortfolioDto {
 
-    private String name;
-    private String description;
+    @NotNull
+    private String username;
 
-    @NonNull
-    private Long userId;
+    @NotNull
+    private String name;
+
+    private String description;
 }
