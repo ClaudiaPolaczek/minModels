@@ -30,13 +30,11 @@ public class PhotoShoot {
     private Model model;
 
     @NonNull
-    @NotBlank
     @Column(nullable = false)
     private PhotoShootStatus photoShootStatus;
 
     @NonNull
     @NotBlank
-    @Lob
     @Column(nullable = false, length =  64)
     @Size(max = 64)
     private String topic;

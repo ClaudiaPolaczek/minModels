@@ -1,5 +1,6 @@
 package pl.polsl.polaczek.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Model {
     private User user;
 
     @OneToMany(mappedBy = "model")
+    @JsonIgnore
     private Set<PhotoShoot> photoShoots;
 
     @NonNull

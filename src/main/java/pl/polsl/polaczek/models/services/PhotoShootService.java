@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotoShootRepository;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
+import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.PhotoShootRegistrationDto;
 import pl.polsl.polaczek.models.entities.PhotoShoot;
 import pl.polsl.polaczek.models.entities.PhotoShootStatus;
@@ -21,14 +22,17 @@ public class PhotoShootService {
     private final PhotoShootRepository photoShootRepository;
     private final PhotographerRepository photographerRepository;
     private final ModelRepository modelRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public PhotoShootService(final PhotoShootRepository photoShootRepository,
                              final PhotographerRepository photographerRepository,
-                             final ModelRepository modelRepository){
+                             final ModelRepository modelRepository,
+                             final UserRepository userRepository){
         this.photoShootRepository = photoShootRepository;
         this.photographerRepository = photographerRepository;
         this.modelRepository = modelRepository;
+        this.userRepository = userRepository;
     }
 
     public PhotoShoot get(Long id){
@@ -40,12 +44,20 @@ public class PhotoShootService {
         return photoShootRepository.findAll();
     }
 
-    public List<PhotoShoot> getAllByModel(Long modelId){
-        return photoShootRepository.findAllByModel_Id(modelId);
+    public List<PhotoShoot> getAllByModel(Long id){
+
+        modelRepository.findById(id).orElseThrow(()
+                -> new EntityDoesNotExistException("Model","id",id.toString()));
+
+        return photoShootRepository.findAllByModel_Id(id);
     }
 
-    public List<PhotoShoot> getAllByPhotographer(Long photographerId){
-        return photoShootRepository.findAllByPhotographer_Id(photographerId);
+    public List<PhotoShoot> getAllByPhotographer(Long id){
+
+        photographerRepository.findById(id).orElseThrow(()
+                -> new EntityDoesNotExistException("Photographer","id",id.toString()));
+
+        return photoShootRepository.findAllByPhotographer_Id(id);
     }
 
     public PhotoShoot register(@NonNull PhotoShootRegistrationDto photoShootRegistrationDto){
@@ -68,6 +80,7 @@ public class PhotoShootService {
                 PhotoShootStatus.CREATED,
                 dto.getTopic(),dto.getNotes(),dto.getMeetingDate(),dto.getDuration(), dto.getCity(),
                 dto.getStreet(), dto.getHouseNumber());
+
     }
 
     public void cancel(@NonNull Long photoShootId){

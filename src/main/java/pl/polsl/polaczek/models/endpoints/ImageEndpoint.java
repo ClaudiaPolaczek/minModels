@@ -40,7 +40,7 @@ public class ImageEndpoint {
         return portfolioService.getAllImages();
     }
 
-    @GetMapping("/{portfolioId}")
+    @GetMapping("/portfolio/{portfolioId}")
     public List<Image> getAllImagesByPortfolio(@PathVariable Long portfolioId){
         return portfolioService.getAllImagesByPortfolio(portfolioId);
     }
@@ -51,7 +51,7 @@ public class ImageEndpoint {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteComment(@PathVariable Long id){
+    public void deleteImage(@PathVariable Long id){
         portfolioService.deleteImage(id);
     }
 }

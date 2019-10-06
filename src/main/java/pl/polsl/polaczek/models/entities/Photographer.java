@@ -1,5 +1,6 @@
 package pl.polsl.polaczek.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Photographer {
     private Long id;
 
     @OneToMany(mappedBy = "photographer")
+    @JsonIgnore
     private Set<PhotoShoot> photoShoots;
 
     @Valid
