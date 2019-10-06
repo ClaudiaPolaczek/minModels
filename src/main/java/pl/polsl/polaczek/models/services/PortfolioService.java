@@ -79,8 +79,7 @@ public class PortfolioService {
 
     public Image addImage(@NonNull ImageDto imageDto){
 
-        Image image = convertImageDtoToEntity(imageDto);
-        return image;
+        return convertImageDtoToEntity(imageDto);
     }
 
     private Image convertImageDtoToEntity(ImageDto dto) {

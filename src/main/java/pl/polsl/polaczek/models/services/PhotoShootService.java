@@ -61,15 +61,13 @@ public class PhotoShootService {
 
     private PhotoShoot convertToEntity(PhotoShootRegistrationDto dto) {
 
-        PhotoShoot photoShoot = new PhotoShoot(photographerRepository.findById(dto.getPhotographerId()).orElseThrow(()
+        return new PhotoShoot(photographerRepository.findById(dto.getPhotographerId()).orElseThrow(()
                 -> new BadRequestException("Photographer", "id", dto.getPhotographerId().toString(), "does not exist")),
                 modelRepository.findById(dto.getModelId()).orElseThrow(()
                 -> new BadRequestException("Model", "id", dto.getModelId().toString(), "does not exist")),
                 PhotoShootStatus.CREATED,
                 dto.getTopic(),dto.getNotes(),dto.getMeetingDate(),dto.getDuration(), dto.getCity(),
                 dto.getStreet(), dto.getHouseNumber());
-
-        return photoShoot;
     }
 
     public void cancel(@NonNull Long photoShootId){
