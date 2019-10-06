@@ -70,12 +70,12 @@ public class PortfolioServiceTest {
 
         given(portfolioRepository.findById(portfolio.getId())).willReturn(Optional.of(portfolio));
         given(imageRepository.findById(image.getId())).willReturn(Optional.of(image));
-        given(userRepository.findByUsername(user.getUsername())).willReturn(Optional.of(user));
+        given(userRepository.findById(user.getUsername())).willReturn(Optional.of(user));
 
 
         given(portfolioRepository.findById(NOT_EXISTING_PORTFOLIO_ID)).willReturn(Optional.empty());
         given(imageRepository.findById(NOT_EXISTING_IMAGE_ID)).willReturn(Optional.empty());
-        given(userRepository.findByUsername(NOT_EXISTING_USER_USERNAME)).willReturn(Optional.empty());
+        given(userRepository.findById(NOT_EXISTING_USER_USERNAME)).willReturn(Optional.empty());
 
         given(portfolioRepository.save(portfolio)).willReturn(portfolio);
         given(imageRepository.save(image)).willReturn(image);

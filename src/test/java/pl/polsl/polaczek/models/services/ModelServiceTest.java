@@ -59,11 +59,11 @@ public class ModelServiceTest {
         initMocks(this);
         model.setId(1L);
 
-        given(userRepository.findByUsername(user.getUsername())).willReturn(Optional.of(user));
+        given(userRepository.findById(user.getUsername())).willReturn(Optional.of(user));
         given(surveyRepository.findById(survey.getId())).willReturn(Optional.of(survey));
         given(modelRepository.findById(model.getId())).willReturn(Optional.of(model));
 
-        given(userRepository.findByUsername(NOT_EXISTING_USER_USERNAME)).willReturn(Optional.empty());
+        given(userRepository.findById(NOT_EXISTING_USER_USERNAME)).willReturn(Optional.empty());
         given(surveyRepository.findById(NOT_EXISTING_SURVEY_ID)).willReturn(Optional.empty());
         given(modelRepository.findById(NOT_EXISTING_MODEL_ID)).willReturn(Optional.empty());
 

@@ -20,10 +20,8 @@ public class NewPhotographerDto {
     @NotBlank
     private String lastName;
 
-    @NotBlank
     private Integer age;
 
-    @NotBlank
     private Character gender;
 
     @NotBlank

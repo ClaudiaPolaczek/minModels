@@ -32,11 +32,9 @@ public class Survey {
     private String lastName;
 
     @NonNull
-    @NotBlank
     private Integer age;
 
     @NonNull
-    @NotBlank
     private Character gender;
 
     @NonNull

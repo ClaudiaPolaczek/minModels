@@ -46,7 +46,7 @@ public class PortfolioService {
     }
 
     public List<Portfolio> getAllPortfoliosByUser(String username){
-        userRepository.findByUsername(username).orElseThrow(()
+        userRepository.findById(username).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",username));
 
         return portfolioRepository.findAllByUser_Username(username);
@@ -108,7 +108,7 @@ public class PortfolioService {
 
     private Portfolio convertPortfolioDtoToEntity(PortfolioDto dto) {
 
-        Portfolio portfolio = new Portfolio(userRepository.findByUsername(dto.getUsername()).orElseThrow
+        Portfolio portfolio = new Portfolio(userRepository.findById(dto.getUsername()).orElseThrow
                 (() -> new BadRequestException("User", "id", dto.getUsername(), "does not exist")), dto.getName());
 
         portfolio.setDescription(dto.getDescription());

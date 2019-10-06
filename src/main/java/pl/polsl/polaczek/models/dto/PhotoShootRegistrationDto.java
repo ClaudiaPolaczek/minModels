@@ -3,6 +3,7 @@ package pl.polsl.polaczek.models.dto;
 import lombok.Data;
 import lombok.NonNull;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -17,15 +18,19 @@ public class PhotoShootRegistrationDto {
     private Long photographerId;
 
     @NotNull
+    @NotBlank
     private String city;
 
     @NotNull
+    @NotBlank
     private String street;
 
     @NotNull
+    @NotBlank
     private String houseNumber;
 
     @NotNull
+    @NotBlank
     private String topic;
 
     @NotNull

@@ -27,10 +27,10 @@ public class CommentService {
 
     public List<Comment> get( String ratingUserUsername , String ratedUserUsername){
 
-        userRepository.findByUsername(ratingUserUsername).orElseThrow(()
+        userRepository.findById(ratingUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",ratingUserUsername));
 
-        userRepository.findByUsername(ratedUserUsername).orElseThrow(()
+        userRepository.findById(ratedUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",ratedUserUsername));
 
         return commentRepository.findAllByRatingUserUsernameAndRatedUserUsername(ratingUserUsername,ratedUserUsername);
@@ -47,7 +47,7 @@ public class CommentService {
 
     public List<Comment> getCommentsByRatingUser(String ratingUserUsername){
 
-        userRepository.findByUsername(ratingUserUsername).orElseThrow(()
+        userRepository.findById(ratingUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","id",ratingUserUsername));
 
         return commentRepository.findAllByRatingUser_Username(ratingUserUsername);
@@ -55,7 +55,7 @@ public class CommentService {
 
     public List<Comment> getCommentsByRatedUser(String ratedUserUsername){
 
-        userRepository.findByUsername(ratedUserUsername).orElseThrow(()
+        userRepository.findById(ratedUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","id",ratedUserUsername));
 
         return commentRepository.findAllByRatedUser_Username(ratedUserUsername);
@@ -69,11 +69,16 @@ public class CommentService {
 
     private Comment convertToEntity(CommentDto dto) {
 
-       return new Comment(userRepository.findByUsername(dto.getRatingUserUsername()).orElseThrow
+        Comment comment = new Comment(userRepository.findById(dto.getRatingUserUsername()).orElseThrow
                 (() -> new BadRequestException("User", "id", dto.getRatedUserUsername(), "does not exist")),
-                userRepository.findByUsername(dto.getRatedUserUsername()).orElseThrow(()
+                userRepository.findById(dto.getRatedUserUsername()).orElseThrow(()
                         -> new BadRequestException("User", "id", dto.getRatingUserUsername(), "does not exist")),
-                dto.getRating(), dto.getContent());
+                dto.getRating());
+
+        comment.setContent(dto.getContent());
+
+        return comment;
+
     }
 
     public void delete(@NonNull Long id){

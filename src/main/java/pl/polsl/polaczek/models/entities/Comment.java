@@ -25,8 +25,7 @@ public class Comment {
 
     @NonNull
     private Integer rating;
-
-    @NonNull
+    
     @Lob
     private String content;
 

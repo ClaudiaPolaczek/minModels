@@ -22,12 +22,12 @@ public class CommentEndpoint {
     }
 
     @GetMapping("/{ratingUserUsername}/{ratedUserUsername}")
-    public List<Comment> get(@PathVariable String ratingUserUsername, @PathVariable String ratedUserUsername){
+    public List<Comment> getByUsers(@PathVariable String ratingUserUsername, @PathVariable String ratedUserUsername){
         return commentService.get(ratingUserUsername, ratedUserUsername);
     }
 
-    @GetMapping("/{id}")
-    public Comment get(@PathVariable Long id){
+    @GetMapping("/c/{id}")
+    public Comment getById(@PathVariable Long id){
         return commentService.get(id);
     }
 
@@ -36,12 +36,12 @@ public class CommentEndpoint {
         return commentService.getAll();
     }
 
-    @GetMapping("/{ratingUserUsername}")
+    @GetMapping("/rating/{ratingUserUsername}")
     public List<Comment> getAllCommentByRatingUser(@PathVariable String ratingUserUsername){
         return commentService.getCommentsByRatingUser(ratingUserUsername);
     }
 
-    @GetMapping("/{ratedUserUsername}")
+    @GetMapping("/rated/{ratedUserUsername}")
     public List<Comment> getAllCommentByRatedUser(@PathVariable String ratedUserUsername){
         return commentService.getCommentsByRatedUser(ratedUserUsername);
     }

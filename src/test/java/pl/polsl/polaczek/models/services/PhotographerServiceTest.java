@@ -61,11 +61,11 @@ public class PhotographerServiceTest {
         initMocks(this);
         photographer.setId(1L);
 
-        given(userRepository.findByUsername(user.getUsername())).willReturn(Optional.of(user));
+        given(userRepository.findById(user.getUsername())).willReturn(Optional.of(user));
         given(surveyRepository.findById(survey.getId())).willReturn(Optional.of(survey));
         given(photographerRepository.findById(photographer.getId())).willReturn(Optional.of(photographer));
 
-        given(userRepository.findByUsername(NOT_EXISTING_USER_USERNAME)).willReturn(Optional.empty());
+        given(userRepository.findById(NOT_EXISTING_USER_USERNAME)).willReturn(Optional.empty());
         given(surveyRepository.findById(NOT_EXISTING_SURVEY_ID)).willReturn(Optional.empty());
         given(photographerRepository.findById(NOT_EXISTING_PHOTOGRAPHER_ID)).willReturn(Optional.empty());
 
@@ -86,7 +86,6 @@ public class PhotographerServiceTest {
     public void shouldAddPhotographer(){
         //given
         photographer.setId(null);
-
         //when
         Photographer created = photographerService.add(newPhotographerDto);
 

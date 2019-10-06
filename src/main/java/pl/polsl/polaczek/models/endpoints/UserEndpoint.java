@@ -22,7 +22,7 @@ public class UserEndpoint {
 
     @GetMapping("/{username}")
     public User getUserDetails(@PathVariable String username){
-        return userRepository.findByUsername(username)
+        return userRepository.findById(username)
                 .orElseThrow(() -> new EntityDoesNotExistException("User", "username", username));
     }
 

@@ -50,10 +50,10 @@ public class PhotoShootService {
 
     public PhotoShoot register(@NonNull PhotoShootRegistrationDto photoShootRegistrationDto){
 
-        if(photoShootRegistrationDto.getMeetingDate().isBefore(LocalDateTime.now())) {
+       /* if(photoShootRegistrationDto.getMeetingDate().isBefore(LocalDateTime.now())) {
             throw new BadRequestException("Photo Shoot", "Meeting Date",
                     photoShootRegistrationDto.getMeetingDate().toString(), "need to be in future");
-        }
+        }*/
 
         PhotoShoot photoShoot = convertToEntity(photoShootRegistrationDto);
         return photoShootRepository.save(photoShoot);

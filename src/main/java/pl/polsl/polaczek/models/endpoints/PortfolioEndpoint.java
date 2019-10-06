@@ -31,7 +31,7 @@ public class PortfolioEndpoint {
         return portfolioService.getAllPortfolios();
     }
 
-    @GetMapping("/{userUsername}")
+    @GetMapping("/u/{userUsername}")
     public List<Portfolio> getAllPortfoliosByUser(@PathVariable String userUsername){
         return portfolioService.getAllPortfoliosByUser(userUsername);
     }

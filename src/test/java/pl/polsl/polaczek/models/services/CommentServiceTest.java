@@ -43,7 +43,7 @@ public class CommentServiceTest {
 
     private User userRated = new User("UsernameRated", "Password", Role.PHOTOGRAPHER);
 
-    private Comment comment= new Comment(userRating, userRated, 5, "content");
+    private Comment comment= new Comment(userRating, userRated, 5);
 
     private CommentDto commentDto = new CommentDto();
 
@@ -56,12 +56,12 @@ public class CommentServiceTest {
         initMocks(this);
         comment.setId(1L);
 
-        given(userRepository.findByUsername(userRated.getUsername())).willReturn(Optional.of(userRated));
-        given(userRepository.findByUsername(userRating.getUsername())).willReturn(Optional.of(userRating));
+        given(userRepository.findById(userRated.getUsername())).willReturn(Optional.of(userRated));
+        given(userRepository.findById(userRating.getUsername())).willReturn(Optional.of(userRating));
         given(commentRepository.findById(comment.getId())).willReturn(Optional.of(comment));
 
-        given(userRepository.findByUsername(NOT_EXISTING_USERRATING_USERNAME)).willReturn(Optional.empty());
-        given(userRepository.findByUsername(NOT_EXISTING_USERRATED_USERNAME)).willReturn(Optional.empty());
+        given(userRepository.findById(NOT_EXISTING_USERRATING_USERNAME)).willReturn(Optional.empty());
+        given(userRepository.findById(NOT_EXISTING_USERRATED_USERNAME)).willReturn(Optional.empty());
         given(commentRepository.findById(NOT_EXISTING_COMMENT_ID)).willReturn(Optional.empty());
 
         given(commentRepository.save(comment)).willReturn(comment);
@@ -69,7 +69,6 @@ public class CommentServiceTest {
         commentDto.setRatingUserUsername(userRating.getUsername());
         commentDto.setRatedUserUsername(userRated.getUsername());
         commentDto.setRating(comment.getRating());
-        commentDto.setContent(comment.getContent());
     }
 
     @Test
@@ -151,9 +150,9 @@ public class CommentServiceTest {
     public void shouldGetAllComments() {
         //given
         List<Comment> comments = Lists.newArrayList(
-                new Comment(userRating, userRated, 1, "content"),
-                new Comment(userRating, userRated, 2, "content"),
-                new Comment(userRating, userRated, 3, "content")
+                new Comment(userRating, userRated, 1),
+                new Comment(userRating, userRated, 2),
+                new Comment(userRating, userRated, 3)
         );
         given(commentRepository.findAll()).willReturn(comments);
 
@@ -178,9 +177,9 @@ public class CommentServiceTest {
     public void shouldGetCommentsByUsers() {
         //given
         List<Comment> comments = Lists.newArrayList(
-                new Comment(userRating, userRated, 1, "content"),
-                new Comment(userRating, userRated, 2, "content"),
-                new Comment(userRating, userRated, 3, "content")
+                new Comment(userRating, userRated, 1),
+                new Comment(userRating, userRated, 2),
+                new Comment(userRating, userRated, 3)
         );
 
         given(commentRepository.findAllByRatingUserUsernameAndRatedUserUsername(userRating.getUsername(),
@@ -213,9 +212,9 @@ public class CommentServiceTest {
     public void shouldGetCommentsByRatingUser() {
         //given
         List<Comment> comments = Lists.newArrayList(
-                new Comment(userRating, userRated, 1, "content"),
-                new Comment(userRating, userRated, 2, "content"),
-                new Comment(userRating, userRated, 3, "content")
+                new Comment(userRating, userRated, 1),
+                new Comment(userRating, userRated, 2),
+                new Comment(userRating, userRated, 3)
         );
 
         given(commentRepository.findAllByRatingUser_Username(userRating.getUsername())).willReturn(comments);
@@ -238,9 +237,9 @@ public class CommentServiceTest {
     public void shouldGetCommentsByRatedUser() {
         //given
         List<Comment> comments = Lists.newArrayList(
-                new Comment(userRating, userRated, 1, "content"),
-                new Comment(userRating, userRated, 2, "content"),
-                new Comment(userRating, userRated, 3, "content")
+                new Comment(userRating, userRated, 1),
+                new Comment(userRating, userRated, 2),
+                new Comment(userRating, userRated, 3)
         );
 
         given(commentRepository.findAllByRatedUser_Username(userRated.getUsername())).willReturn(comments);
