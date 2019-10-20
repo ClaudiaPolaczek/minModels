@@ -44,7 +44,7 @@ public class ModelServiceTest {
     private User user = new User("Username", "Password", Role.PHOTOGRAPHER);
 
     private Survey survey = new Survey("First", "Last", 20, 'M',
-            "Poland", "Cracow", "123456789");
+            "Slaskie", "Cracow", "123456789");
 
     private Model model = new Model("blue", "brown", survey);
 
@@ -75,7 +75,7 @@ public class ModelServiceTest {
         newModelDto.setGender(survey.getGender());
         newModelDto.setFirstName(survey.getFirstName());
         newModelDto.setLastName(survey.getLastName());
-        newModelDto.setCountry(survey.getCountry());
+        newModelDto.setRegion(survey.getRegion());
         newModelDto.setCity(survey.getCity());
         newModelDto.setPhoneNumber(survey.getPhoneNumber());
         newModelDto.setHairColor(model.getHairColor());
@@ -180,7 +180,7 @@ public class ModelServiceTest {
         User user = new User("TestedUsername", "Password", Role.PHOTOGRAPHER);
 
         Survey survey = new Survey("First", "Last", 20, 'M',
-                "Poland", "Cracow", "123456789");
+                "Slaskie", "Cracow", "123456789");
 
         Model model = new Model("blue","brown",survey);
         model.setUser(user);

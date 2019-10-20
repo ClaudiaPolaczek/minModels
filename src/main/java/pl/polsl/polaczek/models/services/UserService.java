@@ -21,10 +21,10 @@ public class UserService{
         this.userRepository = userRepository;
     }
 
-    /*@Override
-    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-        return userRepository.findById(username).orElseThrow(() -> new UsernameNotFoundException(username));
-    }*/
+//    @Override
+//    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
+//        return userRepository.findById(username).orElseThrow(() -> new UsernameNotFoundException(username));
+//    }
 
     User create(String username, String password, Role role) {
 

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping(value = "models", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ModelEndpoint {
 

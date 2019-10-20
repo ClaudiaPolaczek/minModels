@@ -16,6 +16,7 @@ import java.util.List;
 
 @RequestMapping(value = "images", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class ImageEndpoint {
 
     private final PortfolioService portfolioService;

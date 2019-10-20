@@ -9,8 +9,10 @@ import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
 import java.util.List;
 
+
 @RequestMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class UserEndpoint {
 
     private final UserRepository userRepository;

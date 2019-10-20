@@ -25,7 +25,7 @@ public class NewPhotographerDto {
     private Character gender;
 
     @NotBlank
-    private String country;
+    private String region;
 
     @NotBlank
     private String city;

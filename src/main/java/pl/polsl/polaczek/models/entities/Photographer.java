@@ -19,10 +19,6 @@ public class Photographer {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "photographer")
-    @JsonIgnore
-    private Set<PhotoShoot> photoShoots;
-
     @Valid
     @OneToOne
     private User user;

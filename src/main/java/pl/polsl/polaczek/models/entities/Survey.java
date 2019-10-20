@@ -41,7 +41,7 @@ public class Survey {
     @NotBlank
     @Column(nullable = false, length = 32)
     @Size(max = 32)
-    private String country;
+    private String region;
 
     @NonNull
     @NotBlank

@@ -19,11 +19,6 @@ public class BeanConfiguration {
 
    // private final UserService userService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(11);
-    }
-
    /* @Autowired
     public BeanConfiguration(UserService userService) {
         this.userService = userService;

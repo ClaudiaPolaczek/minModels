@@ -48,7 +48,7 @@ public class CommentService {
     public List<Comment> getCommentsByRatingUser(String ratingUserUsername){
 
         userRepository.findById(ratingUserUsername).orElseThrow(()
-                -> new EntityDoesNotExistException("User","id",ratingUserUsername));
+                -> new EntityDoesNotExistException("User","username",ratingUserUsername));
 
         return commentRepository.findAllByRatingUser_Username(ratingUserUsername);
     }
@@ -56,7 +56,7 @@ public class CommentService {
     public List<Comment> getCommentsByRatedUser(String ratedUserUsername){
 
         userRepository.findById(ratedUserUsername).orElseThrow(()
-                -> new EntityDoesNotExistException("User","id",ratedUserUsername));
+                -> new EntityDoesNotExistException("User","username",ratedUserUsername));
 
         return commentRepository.findAllByRatedUser_Username(ratedUserUsername);
     }

@@ -23,10 +23,6 @@ public class Model {
     @OneToOne
     private User user;
 
-    @OneToMany(mappedBy = "model")
-    @JsonIgnore
-    private Set<PhotoShoot> photoShoots;
-
     @NonNull
     @NotBlank
     @Column(nullable = false, length = 64)

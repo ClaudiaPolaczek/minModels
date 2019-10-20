@@ -49,6 +49,10 @@ public class PortfolioService {
         userRepository.findById(username).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",username));
 
+//        return userRepository.findById(username)
+//                .map(user -> portfolioRepository.findAllByUser_Username(user.getUsername()))
+//                .orElseThrow();
+
         return portfolioRepository.findAllByUser_Username(username);
     }
 

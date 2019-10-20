@@ -23,7 +23,7 @@ public class NewModelDto {
     private Character gender;
 
     @NotBlank
-    private String country;
+    private String region;
 
     @NotBlank
     private String city;
