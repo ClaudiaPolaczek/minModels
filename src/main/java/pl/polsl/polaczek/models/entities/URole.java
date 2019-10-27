@@ -1,6 +1,7 @@
 package pl.polsl.polaczek.models.entities;
 
-public enum Role {
+public enum URole {
     PHOTOGRAPHER,
-    MODEL
+    MODEL,
+    ADMIN
 }

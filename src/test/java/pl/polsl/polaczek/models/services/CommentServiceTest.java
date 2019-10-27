@@ -17,7 +17,7 @@ import pl.polsl.polaczek.models.dao.CommentRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.CommentDto;
 import pl.polsl.polaczek.models.entities.Comment;
-import pl.polsl.polaczek.models.entities.Role;
+import pl.polsl.polaczek.models.entities.URole;
 import pl.polsl.polaczek.models.entities.User;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
@@ -39,9 +39,9 @@ public class CommentServiceTest {
     private CommentRepository commentRepository;
 
 
-    private User userRating = new User("UsernameRating", "Password", Role.MODEL);
+    private User userRating = new User("UsernameRating", "Password", URole.MODEL);
 
-    private User userRated = new User("UsernameRated", "Password", Role.PHOTOGRAPHER);
+    private User userRated = new User("UsernameRated", "Password", URole.PHOTOGRAPHER);
 
     private Comment comment= new Comment(userRating, userRated, 5);
 

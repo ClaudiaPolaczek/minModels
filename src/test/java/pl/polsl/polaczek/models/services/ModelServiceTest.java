@@ -1,7 +1,6 @@
 package pl.polsl.polaczek.models.services;
 
 import org.assertj.core.util.Lists;
-import org.dom4j.rule.Mode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,11 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.polsl.polaczek.models.dao.ModelRepository;
-import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.SurveyRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.NewModelDto;
-import pl.polsl.polaczek.models.dto.NewPhotographerDto;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
@@ -41,7 +38,7 @@ public class ModelServiceTest {
     @MockBean
     private UserRepository userRepository;
 
-    private User user = new User("Username", "Password", Role.PHOTOGRAPHER);
+    private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
     private Survey survey = new Survey("First", "Last", 20, 'M',
             "Slaskie", "Cracow", "123456789");
@@ -177,7 +174,7 @@ public class ModelServiceTest {
     @Test
     public void shouldGetModelByUsername() {
         //given
-        User user = new User("TestedUsername", "Password", Role.PHOTOGRAPHER);
+        User user = new User("TestedUsername", "Password", URole.PHOTOGRAPHER);
 
         Survey survey = new Survey("First", "Last", 20, 'M',
                 "Slaskie", "Cracow", "123456789");

@@ -6,4 +6,5 @@ import pl.polsl.polaczek.models.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+    Boolean existsByUsername(String username);
 }

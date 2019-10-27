@@ -43,7 +43,7 @@ public class PhotographerServiceTest {
     private SurveyService surveyService;
 
 
-    private User user = new User("Username", "Password", Role.PHOTOGRAPHER);
+    private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
     private Survey survey = new Survey("First", "Last", 20, 'M',
             "Slaskie", "Cracow", "123456789");
@@ -176,7 +176,7 @@ public class PhotographerServiceTest {
     @Test
     public void shouldGetPhotographerByUsername() {
         //given
-        User user = new User("TestedUsername", "Password", Role.PHOTOGRAPHER);
+        User user = new User("TestedUsername", "Password", URole.PHOTOGRAPHER);
 
         Survey survey = new Survey("First", "Last", 20, 'M',
                 "Slaskie", "Cracow", "123456789");

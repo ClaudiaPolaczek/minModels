@@ -16,19 +16,19 @@ import java.util.List;
 @Service
 public class ModelService {
     private final ModelRepository modelRepository;
-    private final UserService userService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SurveyService surveyService;
     private final PasswordEncoder passwordEncoder;
     private final SurveyRepository surveyRepository;
 
     @Autowired
     public ModelService(final ModelRepository modelRepository,
-                               final UserService userService,
+                               final UserDetailsServiceImpl userDetailsServiceImpl,
                                final SurveyService surveyService,
                                final SurveyRepository surveyRepository,
                                final PasswordEncoder passwordEncoder){
         this.modelRepository = modelRepository;
-        this.userService = userService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.surveyService = surveyService;
         this.surveyRepository = surveyRepository;
         this.passwordEncoder = passwordEncoder;
@@ -50,8 +50,8 @@ public class ModelService {
 
     public Model add(@NonNull NewModelDto dto){
 
-        final User user = userService.create(dto.getUsername(),
-                passwordEncoder.encode(dto.getPassword()), Role.MODEL);
+        final User user = userDetailsServiceImpl.create(dto.getUsername(),
+                passwordEncoder.encode(dto.getPassword()), URole.MODEL);
 
         if(dto.getGender() != 'M' && dto.getGender() != 'W')
             throw new BadRequestException("Model", "gender", dto.getGender().toString(),

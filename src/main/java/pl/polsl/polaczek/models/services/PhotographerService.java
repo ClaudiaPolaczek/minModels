@@ -8,7 +8,7 @@ import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.SurveyRepository;
 import pl.polsl.polaczek.models.dto.NewPhotographerDto;
 import pl.polsl.polaczek.models.entities.Photographer;
-import pl.polsl.polaczek.models.entities.Role;
+import pl.polsl.polaczek.models.entities.URole;
 import pl.polsl.polaczek.models.entities.Survey;
 import pl.polsl.polaczek.models.entities.User;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
@@ -20,7 +20,7 @@ import java.util.List;
 public class PhotographerService {
 
     private final PhotographerRepository photographerRepository;
-    private final UserService userService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SurveyService surveyService;
     private final PasswordEncoder passwordEncoder;
 
@@ -28,12 +28,12 @@ public class PhotographerService {
 
     @Autowired
     public PhotographerService(final PhotographerRepository photographerRepository,
-                               final UserService userService,
+                               final UserDetailsServiceImpl userDetailsServiceImpl,
                                final SurveyService surveyService,
                                final SurveyRepository surveyRepository,
                                final PasswordEncoder passwordEncoder){
         this.photographerRepository = photographerRepository;
-        this.userService = userService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.surveyService = surveyService;
         this.surveyRepository = surveyRepository;
         this.passwordEncoder = passwordEncoder;
@@ -55,8 +55,8 @@ public class PhotographerService {
 
     public Photographer add(@NonNull NewPhotographerDto dto){
 
-        final User user = userService.create(dto.getUsername(),
-                passwordEncoder.encode(dto.getPassword()), Role.PHOTOGRAPHER);
+        final User user = userDetailsServiceImpl.create(dto.getUsername(),
+                passwordEncoder.encode(dto.getPassword()), URole.PHOTOGRAPHER);
 
         if(dto.getGender() != 'M' && dto.getGender() != 'W')
             throw new BadRequestException("Photographer", "gender", dto.getGender().toString(),

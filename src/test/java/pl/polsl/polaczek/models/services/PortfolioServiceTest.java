@@ -23,7 +23,6 @@ import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +46,7 @@ public class PortfolioServiceTest {
     private ImageStore imageStore;
 
 
-    private User user = new User("Username", "Password", Role.PHOTOGRAPHER);
+    private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
     private Portfolio portfolio= new Portfolio(user, "name");
 
