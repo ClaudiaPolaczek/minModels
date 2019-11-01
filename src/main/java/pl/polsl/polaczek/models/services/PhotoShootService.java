@@ -44,20 +44,36 @@ public class PhotoShootService {
         return photoShootRepository.findAll();
     }
 
-    public List<PhotoShoot> getAllByModel(Long id){
+//    public List<PhotoShoot> getAllByModel(Long id){
+//
+//        modelRepository.findById(id).orElseThrow(()
+//                -> new EntityDoesNotExistException("Model","id",id.toString()));
+//
+//        return photoShootRepository.findAllByModel_Id(id);
+//    }
+//
+//    public List<PhotoShoot> getAllByPhotographer(Long id){
+//
+//        photographerRepository.findById(id).orElseThrow(()
+//                -> new EntityDoesNotExistException("Photographer","id",id.toString()));
+//
+//        return photoShootRepository.findAllByPhotographer_Id(id);
+//    }
 
-        modelRepository.findById(id).orElseThrow(()
-                -> new EntityDoesNotExistException("Model","id",id.toString()));
+    public List<PhotoShoot> getAllByInvitingUserUsername(String invitingUserUsername){
 
-        return photoShootRepository.findAllByModel_Id(id);
+        userRepository.findById(invitingUserUsername).orElseThrow(()
+                -> new EntityDoesNotExistException("User","username",invitingUserUsername));
+
+        return photoShootRepository.findAllByInvitingUser_Username(invitingUserUsername);
     }
 
-    public List<PhotoShoot> getAllByPhotographer(Long id){
+    public List<PhotoShoot> getAllByInvitedUserUsername(String invitedUserUsername){
 
-        photographerRepository.findById(id).orElseThrow(()
-                -> new EntityDoesNotExistException("Photographer","id",id.toString()));
+        userRepository.findById(invitedUserUsername).orElseThrow(()
+                -> new EntityDoesNotExistException("User","username",invitedUserUsername));
 
-        return photoShootRepository.findAllByPhotographer_Id(id);
+        return photoShootRepository.findAllByInvitedUser_Username(invitedUserUsername);
     }
 
     public PhotoShoot register(@NonNull PhotoShootRegistrationDto photoShootRegistrationDto){
@@ -73,10 +89,10 @@ public class PhotoShootService {
 
     private PhotoShoot convertToEntity(PhotoShootRegistrationDto dto) {
 
-        return new PhotoShoot(photographerRepository.findById(dto.getPhotographerId()).orElseThrow(()
-                -> new BadRequestException("Photographer", "id", dto.getPhotographerId().toString(), "does not exist")),
-                modelRepository.findById(dto.getModelId()).orElseThrow(()
-                -> new BadRequestException("Model", "id", dto.getModelId().toString(), "does not exist")),
+        return new PhotoShoot(userRepository.findById(dto.getInvitingUserUsername()).orElseThrow(()
+                -> new BadRequestException("User", "username", dto.getInvitingUserUsername(), "does not exist")),
+                userRepository.findById(dto.getInvitedUserUsername()).orElseThrow(()
+                -> new BadRequestException("User", "username", dto.getInvitedUserUsername(), "does not exist")),
                 PhotoShootStatus.CREATED,
                 dto.getTopic(),dto.getNotes(),dto.getMeetingDate(),dto.getDuration(), dto.getCity(),
                 dto.getStreet(), dto.getHouseNumber());
@@ -128,5 +144,9 @@ public class PhotoShootService {
             } else throw new BadRequestException("PhotoShoot", "status", photoShoot.getPhotoShootStatus().toString(),
                     "should equal " + PhotoShootStatus.ACCEPTED.toString());
         }
+    }
+
+    public void delete(@NonNull Long photoShootId) {
+        photoShootRepository.deleteById(photoShootId);
     }
 }

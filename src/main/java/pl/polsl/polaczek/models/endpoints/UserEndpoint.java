@@ -3,9 +3,15 @@ package pl.polsl.polaczek.models.endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pl.polsl.polaczek.models.dao.ModelRepository;
+import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
-import pl.polsl.polaczek.models.entities.User;
+import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
+import pl.polsl.polaczek.models.services.CommentService;
+import pl.polsl.polaczek.models.services.PhotoShootService;
+import pl.polsl.polaczek.models.services.PhotographerService;
+import pl.polsl.polaczek.models.services.PortfolioService;
 
 import java.util.List;
 
@@ -16,6 +22,22 @@ import java.util.List;
 public class UserEndpoint {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private ModelRepository modelRepository;
+
+    @Autowired
+    private PhotographerRepository photographerRepository;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private PhotoShootService photoShootService;
+
+    @Autowired
+    private PortfolioService portfolioService;
+
 
     @Autowired
     UserEndpoint(UserRepository userRepository) {
@@ -31,5 +53,56 @@ public class UserEndpoint {
     @GetMapping
     public List<User> getAllUsers(){
         return userRepository.findAll();
+    }
+
+    @DeleteMapping("/delete/{username}")
+    public void deleteUser(@PathVariable String username){
+        User user = userRepository.findById(username).orElseThrow(()
+                -> new EntityDoesNotExistException("User","id",username));
+
+        List<Comment> commentsByRatedUser = commentService.getCommentsByRatedUser(username);
+
+        for(Comment comment: commentsByRatedUser){
+            commentService.delete(comment.getId());
+        }
+
+        List<Comment> commentsByRatingUser = commentService.getCommentsByRatingUser(username);
+
+        for(Comment comment: commentsByRatingUser){
+            commentService.delete(comment.getId());
+        }
+
+        List<PhotoShoot> allByInvitedUserUsername = photoShootService.getAllByInvitedUserUsername(username);
+
+        for(PhotoShoot photoShoot: allByInvitedUserUsername){
+            photoShootService.delete(photoShoot.getId());
+        }
+
+        List<PhotoShoot> allByInvitingUserUsername = photoShootService.getAllByInvitingUserUsername(username);
+
+        for(PhotoShoot photoShoot: allByInvitingUserUsername){
+            photoShootService.delete(photoShoot.getId());
+        }
+
+        List<Portfolio> allPortfoliosByUser = portfolioService.getAllPortfoliosByUser(username);
+
+        for(Portfolio portfolio: allPortfoliosByUser){
+            portfolioService.deletePortfolio(portfolio.getId());
+        }
+
+        if(user.getRole() == URole.MODEL){
+            Model model = modelRepository.findByUser_Username(username).orElseThrow(()
+                    -> new EntityDoesNotExistException("Model","username",username));
+
+            modelRepository.delete(model);
+
+        } else if (user.getRole() == URole.PHOTOGRAPHER){
+            Photographer photographer = photographerRepository.findByUser_Username(username).orElseThrow(()
+                    -> new EntityDoesNotExistException("Photographer","username",username));
+
+            photographerRepository.delete(photographer);
+        }
+
+        userRepository.deleteById(username);
     }
 }

@@ -8,6 +8,9 @@ import java.util.List;
 
 @Repository
 public interface PhotoShootRepository extends JpaRepository<PhotoShoot, Long> {
-    List<PhotoShoot> findAllByModel_Id(Long modelId);
-    List<PhotoShoot> findAllByPhotographer_Id(Long photographerId);
+//    List<PhotoShoot> findAllByModel_Id(Long modelId);
+//    List<PhotoShoot> findAllByPhotographer_Id(Long photographerId);
+    List<PhotoShoot> findAllByInvitingUser_Username(String invitingUserUsername);
+    List<PhotoShoot> findAllByInvitedUser_Username(String invitedUserUsername);
+    List<PhotoShoot> findAllByInvitingUserUsernameAndInvitedUserUsername(String invitingUserUsername, String invitedUserUsername);
 }

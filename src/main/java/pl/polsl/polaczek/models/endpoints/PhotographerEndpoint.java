@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.dto.NewPhotographerDto;
+import pl.polsl.polaczek.models.dto.UserEdit;
 import pl.polsl.polaczek.models.entities.Photographer;
 import pl.polsl.polaczek.models.services.PhotographerService;
 
@@ -35,6 +36,11 @@ public class PhotographerEndpoint {
     @GetMapping
     public List<Photographer> getAll(){
         return photographerService.getAll();
+    }
+
+    @PatchMapping("/{username}")
+    public Photographer editPhotographer(@PathVariable String username, @Valid @RequestBody UserEdit dto){
+        return photographerService.edit(username, dto);
     }
 
     @PostMapping

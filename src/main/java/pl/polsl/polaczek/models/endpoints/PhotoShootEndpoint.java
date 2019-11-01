@@ -20,8 +20,8 @@ public class PhotoShootEndpoint {
     private final PhotoShootService photoShootService;
 
     @Autowired
-    PhotoShootEndpoint(PhotoShootService visitService) {
-        this.photoShootService = visitService;
+    PhotoShootEndpoint(PhotoShootService photoShootService) {
+        this.photoShootService = photoShootService;
     }
 
     @GetMapping("/{id}")
@@ -34,16 +34,24 @@ public class PhotoShootEndpoint {
         return photoShootService.getAll();
     }
 
-    @RolesAllowed({"MODEL"})
-    @GetMapping("/m/{id}")
-    public List<PhotoShoot> getAllByModel(@PathVariable Long id){
-        return photoShootService.getAllByModel(id);
+//    @GetMapping("/m/{id}")
+//    public List<PhotoShoot> getAllByModel(@PathVariable Long id){
+//        return photoShootService.getAllByModel(id);
+//    }
+//
+//    @GetMapping("/p/{id}")
+//    public List<PhotoShoot> getAllByPhotographer(@PathVariable Long id){
+//        return  photoShootService.getAllByPhotographer(id);
+//    }
+
+    @GetMapping("/inviting/{invitingUserUsername}")
+    public List<PhotoShoot> getAllByInvitingUserUsername(@PathVariable String invitingUserUsername){
+        return photoShootService.getAllByInvitingUserUsername(invitingUserUsername);
     }
 
-    @RolesAllowed({"PHOTOGRAPHER"})
-    @GetMapping("/p/{id}")
-    public List<PhotoShoot> getAllByPhotographer(@PathVariable Long id){
-        return  photoShootService.getAllByPhotographer(id);
+    @GetMapping("/invited/{invitedUserUsername}")
+    public List<PhotoShoot> getAllByInvitedUserUsername(@PathVariable String invitedUserUsername){
+        return  photoShootService.getAllByInvitedUserUsername(invitedUserUsername);
     }
 
     @PostMapping

@@ -8,11 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.configurations.jwt.JwtUtils;
 import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
@@ -24,6 +20,7 @@ import pl.polsl.polaczek.models.dto.auth.LoginRequest;
 import pl.polsl.polaczek.models.dto.auth.MessageResponse;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
+import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 import pl.polsl.polaczek.models.services.ModelService;
 import pl.polsl.polaczek.models.services.SurveyService;
 import pl.polsl.polaczek.models.services.UserDetailsImpl;
@@ -43,8 +40,8 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    PasswordEncoder encoder;
+//    @Autowired
+//    PasswordEncoder encoder;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -54,6 +51,7 @@ public class AuthController {
     private final PhotographerRepository photographerRepository;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SurveyRepository surveyRepository;
+    private final PasswordEncoder encoder;
 
     @Autowired
     public AuthController(final ModelRepository modelRepository,
@@ -62,12 +60,13 @@ public class AuthController {
                         final UserDetailsServiceImpl userDetailsServiceImpl,
                         final SurveyService surveyService,
                         final SurveyRepository surveyRepository,
-                        final PasswordEncoder passwordEncoder) {
+                        final PasswordEncoder encoder) {
         this.modelRepository = modelRepository;
         this.modelService = modelService;
         this.photographerRepository = photographerRepository;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.surveyRepository = surveyRepository;
+        this.encoder = encoder;
     }
 
     @PostMapping("/signin")
@@ -96,11 +95,11 @@ public class AuthController {
             return ResponseEntity.ok(new MessageResponse("User not registered"));
         }
 
-//        if (userRepository.existsByUsername(newModelDto.getUsername())) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body( new BadRequestException("User", "username", newModelDto.getUsername(), "already exist"));
-//        }
+        if (userRepository.existsByUsername(newModelDto.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body( new BadRequestException("User", "username", newModelDto.getUsername(), "already exist"));
+        }
 
         if(newModelDto.getGender() != 'M' && newModelDto.getGender() != 'W')
             throw new BadRequestException("Model", "gender", newModelDto.getGender().toString(),
@@ -151,5 +150,36 @@ public class AuthController {
         photographerRepository.save(photographer);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @PostMapping("/a/signup")
+    public ResponseEntity registerAdmin(@Valid @RequestBody NewAdmin newAdmin) {
+
+        if (userRepository.existsByUsername(newAdmin.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body( new BadRequestException("User", "username", newAdmin.getUsername(), "already exist"));
+        }
+
+        User user = new User(newAdmin.getUsername(),
+                encoder.encode(newAdmin.getPassword()), URole.ADMIN
+        );
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity changePassword(@Valid @RequestBody NewAdmin newAdmin) {
+
+        User user = userRepository.findById(newAdmin.getUsername())
+                .orElseThrow(() -> new EntityDoesNotExistException("User", "username", newAdmin.getPassword()));
+
+        user.setPassword(encoder.encode(newAdmin.getPassword()));
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Password changed successfully!"));
     }
 }

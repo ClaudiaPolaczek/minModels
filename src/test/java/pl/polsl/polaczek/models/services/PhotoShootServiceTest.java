@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotoShootRepository;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
+import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.PhotoShootRegistrationDto;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
@@ -41,20 +42,27 @@ public class PhotoShootServiceTest {
     private ModelRepository modelRepository;
 
     @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
     private PhotographerRepository photographerRepository;
 
     private Survey modelSurvey = new Survey("ModelName", "ModelSurname",20, 'W',
             "Country", "City", "123456789");
 
-    private Model model = new Model("blue", "brown",modelSurvey);
+    //private Model model = new Model("blue", "brown",modelSurvey);
 
     private Survey photographerSurvey = new Survey("ModelName", "ModelSurname",20, 'W',
             "Country", "City", "123456789");
 
-    private Photographer photographer = new Photographer(photographerSurvey);
+    //private Photographer photographer = new Photographer(photographerSurvey);
 
-    private PhotoShoot photoShoot= new PhotoShoot(photographer, model, PhotoShootStatus.CREATED, "topic", "notes",
-            LocalDateTime.of(2020,1,30, 12, 0), Duration.ofHours(1),
+    private User userModel  = new User("model", "model", URole.MODEL);
+
+    private User userPhotographer  = new User("photographer", "photographer", URole.PHOTOGRAPHER);
+
+    private PhotoShoot photoShoot = new PhotoShoot(userPhotographer, userModel, PhotoShootStatus.CREATED, "topic", "notes",
+            LocalDateTime.of(2020,1,30, 12, 0), 1,
             "City", "Street", "1");
 
     private PhotoShootRegistrationDto photoShootRegistrationDto = new PhotoShootRegistrationDto();
@@ -62,26 +70,27 @@ public class PhotoShootServiceTest {
     private static final Long NOT_EXISTING_MODEL_ID = 10L;
     private static final Long NOT_EXISTING_PHOTOGRAPHER_ID = 20L;
     private static final Long NOT_EXISTING_PHOTOSHOOT_ID = 30L;
+    private static final String NOT_EXISTING_USER_USERNAME = "nn";
 
     @Before
     public void setUpMocks(){
         initMocks(this);
-        model.setId(1L);
-        photographer.setId(2L);
+
         photoShoot.setId(3L);
 
-        given(modelRepository.findById(model.getId())).willReturn(Optional.of(model));
-        given(photographerRepository.findById(photographer.getId())).willReturn(Optional.of(photographer));
+        given(userRepository.findById(userModel.getUsername())).willReturn(Optional.of(userModel));
+        given(userRepository.findById(userPhotographer.getUsername())).willReturn(Optional.of(userPhotographer));
         given(photoShootRepository.findById(photoShoot.getId())).willReturn(Optional.of(photoShoot));
 
         given(modelRepository.findById(NOT_EXISTING_MODEL_ID)).willReturn(Optional.empty());
         given(photographerRepository.findById(NOT_EXISTING_PHOTOGRAPHER_ID)).willReturn(Optional.empty());
         given(photoShootRepository.findById(NOT_EXISTING_PHOTOSHOOT_ID)).willReturn(Optional.empty());
+        given(userRepository.findById(NOT_EXISTING_USER_USERNAME)).willReturn(Optional.empty());
 
         given(photoShootRepository.save(photoShoot)).willReturn(photoShoot);
 
-        photoShootRegistrationDto.setModelId(model.getId());
-        photoShootRegistrationDto.setPhotographerId(photographer.getId());
+        photoShootRegistrationDto.setInvitedUserUsername(userModel.getUsername());
+        photoShootRegistrationDto.setInvitingUserUsername(userPhotographer.getUsername());
         photoShootRegistrationDto.setMeetingDate(photoShoot.getMeetingDate());
         photoShootRegistrationDto.setDuration(photoShoot.getDuration());
         photoShootRegistrationDto.setCity(photoShoot.getCity());
@@ -105,9 +114,9 @@ public class PhotoShootServiceTest {
     }
 
     @Test(expected = BadRequestException.class)
-    public void shouldNotRegisterPhotoShootIfModelDoesNotExist() {
+    public void shouldNotRegisterPhotoShootIfInvitingUserDoesNotExist() {
         //given
-        photoShootRegistrationDto.setModelId(NOT_EXISTING_MODEL_ID);
+        photoShootRegistrationDto.setInvitingUserUsername(NOT_EXISTING_USER_USERNAME);
 
         //when
         photoShootService.register(photoShootRegistrationDto);
@@ -117,9 +126,9 @@ public class PhotoShootServiceTest {
     }
 
     @Test(expected = BadRequestException.class)
-    public void shouldNotRegisterPhotoShootIfPhotographerDoesNotExist() {
+    public void shouldNotRegisterPhotoShootIfInvitedUserDoesNotExist() {
         //given
-        photoShootRegistrationDto.setPhotographerId(NOT_EXISTING_PHOTOGRAPHER_ID);
+        photoShootRegistrationDto.setInvitedUserUsername(NOT_EXISTING_USER_USERNAME);
 
         //when
         photoShootService.register(photoShootRegistrationDto);
@@ -311,14 +320,14 @@ public class PhotoShootServiceTest {
     public void shouldGetAllPhotoShoots() {
         //given
         List<PhotoShoot> photoShoots = Lists.newArrayList(
-                new PhotoShoot(photographer, model, PhotoShootStatus.CREATED, "topic", "notes",
-                        LocalDateTime.now(), Duration.ofHours(1),
+                new PhotoShoot(userModel, userPhotographer, PhotoShootStatus.CREATED, "topic", "notes",
+                        LocalDateTime.now(), 1,
                         "City", "Street", "1"),
-                new PhotoShoot(photographer, model, PhotoShootStatus.CANCELED, "topic", "notes",
-                        LocalDateTime.now(), Duration.ofHours(1),
+                new PhotoShoot(userModel, userPhotographer, PhotoShootStatus.CANCELED, "topic", "notes",
+                        LocalDateTime.now(), 1,
                         "City", "Street", "1"),
-                new PhotoShoot(photographer, model, PhotoShootStatus.END, "topic", "notes",
-                        LocalDateTime.now(), Duration.ofHours(1),
+                new PhotoShoot(userModel, userPhotographer, PhotoShootStatus.END, "topic", "notes",
+                        LocalDateTime.now(), 1,
                         "City", "Street", "1")
         );
         given(photoShootRepository.findAll()).willReturn(photoShoots);

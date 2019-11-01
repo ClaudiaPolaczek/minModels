@@ -12,25 +12,21 @@ import java.time.LocalDateTime;
 public class PhotoShootRegistrationDto {
 
     @NotNull
-    private Long modelId;
+    private String invitingUserUsername;
 
     @NotNull
-    private Long photographerId;
+    private String invitedUserUsername;
 
     @NotNull
-    @NotBlank
     private String city;
 
     @NotNull
-    @NotBlank
     private String street;
 
     @NotNull
-    @NotBlank
     private String houseNumber;
 
     @NotNull
-    @NotBlank
     private String topic;
 
     @NotNull
@@ -40,5 +36,5 @@ public class PhotoShootRegistrationDto {
     private LocalDateTime meetingDate;
 
     @NotNull
-    private Duration duration;
+    private Integer duration;
 }

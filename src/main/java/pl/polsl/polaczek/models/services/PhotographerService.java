@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.SurveyRepository;
+import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.NewPhotographerDto;
+import pl.polsl.polaczek.models.dto.UserEdit;
 import pl.polsl.polaczek.models.entities.Photographer;
 import pl.polsl.polaczek.models.entities.URole;
 import pl.polsl.polaczek.models.entities.Survey;
@@ -23,7 +25,7 @@ public class PhotographerService {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SurveyService surveyService;
     private final PasswordEncoder passwordEncoder;
-
+    private final UserRepository userRepository;
     private final SurveyRepository surveyRepository;
 
     @Autowired
@@ -31,12 +33,14 @@ public class PhotographerService {
                                final UserDetailsServiceImpl userDetailsServiceImpl,
                                final SurveyService surveyService,
                                final SurveyRepository surveyRepository,
-                               final PasswordEncoder passwordEncoder){
+                               final PasswordEncoder passwordEncoder,
+                               final UserRepository userRepository){
         this.photographerRepository = photographerRepository;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.surveyService = surveyService;
         this.surveyRepository = surveyRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     public Photographer get(Long id){
@@ -71,6 +75,25 @@ public class PhotographerService {
 
         final Photographer photographer = new Photographer(survey);
         photographer.setUser(user);
+
+        return photographerRepository.save(photographer);
+    }
+
+    public Photographer edit(String username, @NonNull UserEdit dto){
+
+        Photographer photographer = photographerRepository.findByUser_Username(username)
+                .orElseThrow(() -> new EntityDoesNotExistException("Photographer", "username", username));
+
+        Survey survey = photographer.getSurvey();
+        User user = photographer.getUser();
+
+        user.setPassword(dto.getPassword());
+        survey.setRegion(dto.getRegion());
+        survey.setCity(dto.getCity());
+        survey.setPhoneNumber(dto.getPhoneNumber());
+
+        surveyRepository.save(survey);
+        userRepository.save(user);
 
         return photographerRepository.save(photographer);
     }

@@ -123,6 +123,8 @@ public class PortfolioService {
         portfolioRepository.findById(id).orElseThrow(()
                 -> new EntityDoesNotExistException("Portfolio","id",id.toString()));
 
+        //usuniecie zdjec
+
         portfolioRepository.deleteById(id);
     }
 

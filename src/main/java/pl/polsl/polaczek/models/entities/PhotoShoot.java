@@ -19,15 +19,13 @@ public class PhotoShoot {
     @GeneratedValue
     private Long id;
 
-    @Valid
     @NonNull
     @ManyToOne
-    private Photographer photographer;
+    private User invitingUser;
 
-    @Valid
     @NonNull
     @ManyToOne
-    private Model model;
+    private User invitedUser;
 
     @NonNull
     @Column(nullable = false)
@@ -51,7 +49,7 @@ public class PhotoShoot {
 
     @NonNull
     @Column(nullable = false)
-    private Duration duration;
+    private Integer duration;
 
     @NonNull
     @NotBlank

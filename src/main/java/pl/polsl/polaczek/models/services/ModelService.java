@@ -6,7 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.SurveyRepository;
+import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.NewModelDto;
+import pl.polsl.polaczek.models.dto.UserEdit;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
@@ -20,18 +22,21 @@ public class ModelService {
     private final SurveyService surveyService;
     private final PasswordEncoder passwordEncoder;
     private final SurveyRepository surveyRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public ModelService(final ModelRepository modelRepository,
                                final UserDetailsServiceImpl userDetailsServiceImpl,
                                final SurveyService surveyService,
                                final SurveyRepository surveyRepository,
-                               final PasswordEncoder passwordEncoder){
+                               final PasswordEncoder passwordEncoder,
+                                final UserRepository userRepository){
         this.modelRepository = modelRepository;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.surveyService = surveyService;
         this.surveyRepository = surveyRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     public Model get(Long id){
@@ -66,6 +71,28 @@ public class ModelService {
 
         final Model model = new Model(dto.getEyesColor(), dto.getHairColor(), survey);
         model.setUser(user);
+
+        return modelRepository.save(model);
+    }
+
+    public Model edit(String username, @NonNull UserEdit dto){
+
+        Model model = modelRepository.findByUser_Username(username)
+                .orElseThrow(() -> new EntityDoesNotExistException("Model", "username", username));
+
+        Survey survey = model.getSurvey();
+        User user = model.getUser();
+
+        user.setPassword(dto.getPassword());
+        survey.setRegion(dto.getRegion());
+        survey.setCity(dto.getCity());
+        survey.setPhoneNumber(dto.getPhoneNumber());
+
+        model.setEyesColor(dto.getEyesColor());
+        model.setHairColor(dto.getHairColor());
+
+        surveyRepository.save(survey);
+        userRepository.save(user);
 
         return modelRepository.save(model);
     }
