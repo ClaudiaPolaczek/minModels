@@ -3,13 +3,12 @@ package pl.polsl.polaczek.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Entity
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Image {
+public class Notification {
 
     @Id
     @GeneratedValue
@@ -17,12 +16,15 @@ public class Image {
 
     @NonNull
     @ManyToOne
-    private Portfolio portfolio;
-
-    @Column(length =  64)
-    @Size(max = 64)
-    private String title;
+    private User user;
 
     @NonNull
-    private String filePath;
+    private String content;
+
+    private Integer readValue;
+
+    @PrePersist
+    private void setRead() {
+        readValue = 0;
+    }
 }

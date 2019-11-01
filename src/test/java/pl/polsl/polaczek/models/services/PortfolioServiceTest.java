@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.polsl.polaczek.models.dao.ImageRepository;
-import pl.polsl.polaczek.models.dao.ImageStore;
 import pl.polsl.polaczek.models.dao.PortfolioRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.ImageDto;
@@ -42,19 +41,15 @@ public class PortfolioServiceTest {
     @MockBean
     private UserRepository userRepository;
 
-    @MockBean
-    private ImageStore imageStore;
-
-
     private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
     private Portfolio portfolio= new Portfolio(user, "name");
 
-    private Image image = new Image(portfolio);
+    private String imageInput = "C:\\Users\\Claudia\\Desktop\\_DSC9178.JPG";
+    private Image image = new Image(portfolio, imageInput);
 
     private PortfolioDto portfolioDto = new PortfolioDto();
     private ImageDto imageDto = new ImageDto();
-    private String imageInput = "C:\\Users\\Claudia\\Desktop\\_DSC9178.JPG";
 
 
     private static final Long NOT_EXISTING_IMAGE_ID = 10L;
@@ -78,7 +73,6 @@ public class PortfolioServiceTest {
 
         given(portfolioRepository.save(portfolio)).willReturn(portfolio);
         given(imageRepository.save(image)).willReturn(image);
-       // given(imageStore.getContent(image)).willReturn(imageInput);
 
         portfolioDto.setDescription(portfolio.getDescription());
         portfolioDto.setName(portfolio.getName());
@@ -271,9 +265,9 @@ public class PortfolioServiceTest {
     public void shouldGetAllImages() {
         //given
         List<Image> images = Lists.newArrayList(
-                new Image(portfolio),
-                new Image(portfolio),
-                new Image(portfolio)
+                new Image(portfolio, imageInput),
+                new Image(portfolio, imageInput),
+                new Image(portfolio, imageInput)
         );
 
         given(imageRepository.findAll()).willReturn(images);
@@ -299,9 +293,9 @@ public class PortfolioServiceTest {
     public void shouldGetImagesByPortfolio() {
         //given
         List<Image> images = Lists.newArrayList(
-                new Image(portfolio),
-                new Image(portfolio),
-                new Image(portfolio)
+                new Image(portfolio, imageInput),
+                new Image(portfolio, imageInput),
+                new Image(portfolio, imageInput)
         );
 
         given(imageRepository.findAllByPortfolio_Id(portfolio.getId())).willReturn(images);

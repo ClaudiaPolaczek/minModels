@@ -4,7 +4,6 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.polaczek.models.dao.ImageRepository;
-import pl.polsl.polaczek.models.dao.ImageStore;
 import pl.polsl.polaczek.models.dao.PortfolioRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.ImageDto;
@@ -14,9 +13,6 @@ import pl.polsl.polaczek.models.entities.Portfolio;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -25,15 +21,13 @@ public class PortfolioService {
     private final PortfolioRepository portfolioRepository;
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;
-    private final ImageStore imageStore;
 
     @Autowired
     public PortfolioService(final PortfolioRepository portfolioRepository, final ImageRepository imageRepository,
-                            final UserRepository userRepository, final ImageStore imageStore){
+                            final UserRepository userRepository){
         this.portfolioRepository = portfolioRepository;
         this.imageRepository = imageRepository;
         this.userRepository = userRepository;
-        this.imageStore = imageStore;
     }
 
     public Portfolio getPortfolio(Long id){
@@ -61,14 +55,6 @@ public class PortfolioService {
                 .orElseThrow(() -> new EntityDoesNotExistException("Image", "id", id.toString()));
     }
 
-    public InputStream getImageStream(Long id){
-
-        Image image = imageRepository.findById(id)
-                .orElseThrow(() -> new EntityDoesNotExistException("Image", "id", id.toString()));
-
-        return imageStore.getContent(image);
-    }
-
     public List<Image> getAllImages(){
         return imageRepository.findAll();
     }
@@ -89,16 +75,11 @@ public class PortfolioService {
     private Image convertImageDtoToEntity(ImageDto dto) {
 
         Image image = new Image(portfolioRepository.findById(dto.getPortfolioId()).orElseThrow
-                (() -> new BadRequestException("Portfolio", "id", dto.getPortfolioId().toString(), "does not exist")));
+                (() -> new BadRequestException("Portfolio", "id", dto.getPortfolioId().toString(), "does not exist")),
+                dto.getFilePath());
 
         image.setTitle(dto.getTitle());
         imageRepository.save(image);
-
-        try {
-            imageStore.setContent(image, new FileInputStream(dto.getFilePath()));
-        } catch (FileNotFoundException e) {
-            throw new BadRequestException("File", "path", dto.getFilePath(), "can't be found");
-        }
 
         return image;
     }
@@ -131,9 +112,6 @@ public class PortfolioService {
     public void deleteImage(@NonNull Long id){
         Image image = imageRepository.findById(id).orElseThrow(()
                 -> new EntityDoesNotExistException("Image","id",id.toString()));
-
-        imageStore.unsetContent(image);
-
         imageRepository.deleteById(id);
     }
 }

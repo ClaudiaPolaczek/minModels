@@ -30,7 +30,7 @@ public class Comment {
     private String content;
 
     @Column(nullable = false)
-    private LocalDateTime  addedDate;
+    private LocalDateTime addedDate;
 
     @PrePersist
     private void setDate() {
