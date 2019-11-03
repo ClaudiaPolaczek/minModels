@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     compile "io.jsonwebtoken:jjwt:0.9.1"
+    compile "com.amazonaws:aws-java-sdk:1.11.133"
     compileOnly 'org.projectlombok:lombok'
     implementation group: 'com.google.guava', name: 'guava', version: '27.1-jre'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

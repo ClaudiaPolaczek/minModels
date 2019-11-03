@@ -3,15 +3,13 @@ package pl.polsl.polaczek.models.endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.polsl.polaczek.models.dto.ImageDto;
-import pl.polsl.polaczek.models.dto.PortfolioDto;
-import pl.polsl.polaczek.models.entities.Comment;
 import pl.polsl.polaczek.models.entities.Image;
-import pl.polsl.polaczek.models.entities.Portfolio;
+import pl.polsl.polaczek.models.services.AmazonClient;
 import pl.polsl.polaczek.models.services.PortfolioService;
 
 import javax.validation.Valid;
-import java.io.InputStream;
 import java.util.List;
 
 @RequestMapping(value = "images", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -20,11 +18,29 @@ import java.util.List;
 public class ImageEndpoint {
 
     private final PortfolioService portfolioService;
+    private AmazonClient amazonClient;
 
     @Autowired
-    ImageEndpoint(PortfolioService portfolioService) {
+    ImageEndpoint(PortfolioService portfolioService, AmazonClient amazonClient) {
         this.portfolioService = portfolioService;
+        this.amazonClient = amazonClient;
     }
+
+    @PostMapping("/uploadFile")
+    public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
+        return this.amazonClient.uploadFile(file);
+    }
+
+    @PostMapping
+    public Image addImage(@Valid @RequestBody ImageDto dto) {
+        return portfolioService.addImage(dto);
+    }
+
+    @DeleteMapping("/deleteFile")
+    public String deleteFile(@RequestPart(value = "url") String fileUrl) {
+        return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
+    }
+
 
     @GetMapping("/{id}")
     public Image get(@PathVariable Long id){
@@ -44,11 +60,6 @@ public class ImageEndpoint {
     @GetMapping("/portfolio/{portfolioId}")
     public List<Image> getAllImagesByPortfolio(@PathVariable Long portfolioId){
         return portfolioService.getAllImagesByPortfolio(portfolioId);
-    }
-
-    @PostMapping
-    public Image addImage(@Valid @RequestBody ImageDto dto) {
-        return portfolioService.addImage(dto);
     }
 
     @DeleteMapping("/delete/{id}")

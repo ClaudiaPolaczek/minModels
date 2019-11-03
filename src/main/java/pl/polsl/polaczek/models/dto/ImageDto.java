@@ -14,7 +14,5 @@ public class ImageDto {
     private Long portfolioId;
 
     @NotNull
-    private String filePath;
-
-    private String title;
+    private String fileUrl;
 }

@@ -76,9 +76,8 @@ public class PortfolioService {
 
         Image image = new Image(portfolioRepository.findById(dto.getPortfolioId()).orElseThrow
                 (() -> new BadRequestException("Portfolio", "id", dto.getPortfolioId().toString(), "does not exist")),
-                dto.getFilePath());
+                dto.getFileUrl());
 
-        image.setTitle(dto.getTitle());
         imageRepository.save(image);
 
         return image;

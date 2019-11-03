@@ -19,10 +19,6 @@ public class Image {
     @ManyToOne
     private Portfolio portfolio;
 
-    @Column(length =  64)
-    @Size(max = 64)
-    private String title;
-
     @NonNull
-    private String filePath;
+    private String fileUrl;
 }
