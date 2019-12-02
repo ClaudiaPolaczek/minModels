@@ -31,6 +31,8 @@ public class Portfolio {
     @Size(max = 8000)
     private String description;
 
+    private String mainPhotoUrl;
+
     @Column(nullable = false)
     private LocalDateTime addedDate;
 

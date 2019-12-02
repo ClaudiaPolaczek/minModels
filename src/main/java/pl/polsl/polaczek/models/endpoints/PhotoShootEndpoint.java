@@ -35,14 +35,14 @@ public class PhotoShootEndpoint {
     }
 
 //    @GetMapping("/m/{id}")
-//    public List<PhotoShoot> getAllByModel(@PathVariable Long id){
-//        return photoShootService.getAllByModel(id);
-//    }
-//
-//    @GetMapping("/p/{id}")
-//    public List<PhotoShoot> getAllByPhotographer(@PathVariable Long id){
-//        return  photoShootService.getAllByPhotographer(id);
-//    }
+////    public List<PhotoShoot> getAllByModel(@PathVariable Long id){
+////        return photoShootService.getAllByModel(id);
+////    }
+////
+////    @GetMapping("/p/{id}")
+////    public List<PhotoShoot> getAllByPhotographer(@PathVariable Long id){
+////        return  photoShootService.getAllByPhotographer(id);
+////    }
 
     @GetMapping("/inviting/{invitingUserUsername}")
     public List<PhotoShoot> getAllByInvitingUserUsername(@PathVariable String invitingUserUsername){

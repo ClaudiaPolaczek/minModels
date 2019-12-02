@@ -1,11 +1,13 @@
 package pl.polsl.polaczek.models.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
+import pl.polsl.polaczek.models.dto.ImageDto;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 import pl.polsl.polaczek.models.services.CommentService;
@@ -13,6 +15,7 @@ import pl.polsl.polaczek.models.services.PhotoShootService;
 import pl.polsl.polaczek.models.services.PhotographerService;
 import pl.polsl.polaczek.models.services.PortfolioService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -53,6 +56,17 @@ public class UserEndpoint {
     @GetMapping
     public List<User> getAllUsers(){
         return userRepository.findAll();
+    }
+
+    @PatchMapping("/photo/{username}")
+    public User addMainPhotoUrl(@PathVariable String username, @Valid @RequestBody ImageDto dto){
+
+        User user = userRepository.findById(username).orElseThrow(()
+                -> new EntityDoesNotExistException("User","id",username));
+
+        user.setMainPhotoUrl(dto.getFileUrl());
+
+        return userRepository.save(user);
     }
 
     @DeleteMapping("/delete/{username}")

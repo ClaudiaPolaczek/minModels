@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -21,4 +22,12 @@ public class Image {
 
     @NonNull
     private String fileUrl;
+
+    @Column(nullable = false)
+    private LocalDateTime addedDate;
+
+    @PrePersist
+    private void setDate() {
+        addedDate = LocalDateTime.now();
+    }
 }

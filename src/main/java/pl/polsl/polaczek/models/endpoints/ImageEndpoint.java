@@ -36,9 +36,10 @@ public class ImageEndpoint {
         return portfolioService.addImage(dto);
     }
 
-    @DeleteMapping("/deleteFile")
-    public String deleteFile(@RequestPart(value = "url") String fileUrl) {
-        return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
+    @DeleteMapping("/deleteFile/{id}")
+    public String deleteFile(@PathVariable Long id) {
+        return portfolioService.deleteImage(id);
+//        return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
     }
 
 
@@ -65,5 +66,10 @@ public class ImageEndpoint {
     @DeleteMapping("/delete/{id}")
     public void deleteImage(@PathVariable Long id){
         portfolioService.deleteImage(id);
+    }
+
+    @DeleteMapping("/delete/url/{url}")
+    public void deleteImageByUrl(@PathVariable String url){
+        portfolioService.deleteImageByUrl(url);
     }
 }

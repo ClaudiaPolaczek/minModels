@@ -27,6 +27,8 @@ public class User{
     @NonNull
     private URole role;
 
+    private String mainPhotoUrl;
+
     public URole getRole() {
         return role;
     }
@@ -45,5 +47,13 @@ public class User{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMainPhotoUrl() {
+        return mainPhotoUrl;
+    }
+
+    public void setMainPhotoUrl(String mainPhotoUrl) {
+        this.mainPhotoUrl = mainPhotoUrl;
     }
 }

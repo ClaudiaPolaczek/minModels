@@ -14,4 +14,6 @@ public class PortfolioDto {
     private String name;
 
     private String description;
+
+    private String mainPhotoUrl;
 }

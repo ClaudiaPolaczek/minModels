@@ -43,7 +43,17 @@ public class PortfolioEndpoint {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteComment(@PathVariable Long id){
+    public void deletePortfolio(@PathVariable Long id){
         portfolioService.deletePortfolio(id);
+    }
+
+    @PatchMapping("/edit/{id}")
+    public Portfolio editPortfolio(@PathVariable Long id, @Valid @RequestBody PortfolioDto dto){
+        return portfolioService.editPortfolio(id, dto);
+    }
+
+    @PatchMapping("/photo/{id}")
+    public Portfolio addMainPhotoUrl(@PathVariable Long id, @Valid @RequestBody PortfolioDto dto){
+        return portfolioService.addMainPhotoUrl(id, dto.getMainPhotoUrl());
     }
 }

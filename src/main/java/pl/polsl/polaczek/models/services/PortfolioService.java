@@ -21,13 +21,16 @@ public class PortfolioService {
     private final PortfolioRepository portfolioRepository;
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;
+    private AmazonClient amazonClient;
+
 
     @Autowired
     public PortfolioService(final PortfolioRepository portfolioRepository, final ImageRepository imageRepository,
-                            final UserRepository userRepository){
+                            final UserRepository userRepository, AmazonClient amazonClient){
         this.portfolioRepository = portfolioRepository;
         this.imageRepository = imageRepository;
         this.userRepository = userRepository;
+        this.amazonClient = amazonClient;
     }
 
     public Portfolio getPortfolio(Long id){
@@ -108,9 +111,47 @@ public class PortfolioService {
         portfolioRepository.deleteById(id);
     }
 
-    public void deleteImage(@NonNull Long id){
+    public String deleteImage(@NonNull Long id){
         Image image = imageRepository.findById(id).orElseThrow(()
                 -> new EntityDoesNotExistException("Image","id",id.toString()));
+
+        String message = this.amazonClient.deleteFileFromS3Bucket(image.getFileUrl());
+
         imageRepository.deleteById(id);
+
+        return message;
     }
+
+    public void deleteImageByUrl(@NonNull String url){
+
+        List<Image> images = imageRepository.findAllByFileUrl(url);
+
+        for(Image image: images){
+            imageRepository.delete(image);
+        }
+    }
+
+    public Portfolio editPortfolio(@NonNull Long id, @NonNull PortfolioDto portfolioDto){
+
+            Portfolio portfolio = portfolioRepository.findById(id)
+                    .orElseThrow(() -> new EntityDoesNotExistException("Portfolio", "id", id.toString()));
+
+            portfolio.setName(portfolioDto.getName());
+            portfolio.setDescription(portfolioDto.getDescription());
+
+            return portfolioRepository.save(portfolio);
+    }
+
+    public Portfolio addMainPhotoUrl(@NonNull Long id, String url){
+
+        Portfolio portfolio = portfolioRepository.findById(id)
+                .orElseThrow(() -> new EntityDoesNotExistException("Portfolio", "id", id.toString()));
+
+        portfolio.setMainPhotoUrl(url);
+
+        return portfolioRepository.save(portfolio);
+    }
+
+
+
 }
