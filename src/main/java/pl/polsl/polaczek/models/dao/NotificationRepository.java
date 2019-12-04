@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
     List<Notification> findAllByUser_Username(String username);
+    List<Notification> findAllByUser_UsernameAndReadValue(String username, Integer readValue);
 }

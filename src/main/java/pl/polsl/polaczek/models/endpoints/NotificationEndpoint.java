@@ -27,6 +27,11 @@ public class NotificationEndpoint {
         return notificationService.get(username);
     }
 
+    @GetMapping("/n/{username}")
+    public List<Notification> getNonReadByUsers(@PathVariable String username){
+        return notificationService.getNonRead(username);
+    }
+
     @GetMapping("/id/{id}")
     public Notification getById(@PathVariable Long id){
         return notificationService.get(id);

@@ -31,9 +31,7 @@ public class NewModelDto {
     @NotBlank
     private String phoneNumber;
 
-    @NotBlank
     private String hairColor;
 
-    @NotBlank
     private String eyesColor;
 }

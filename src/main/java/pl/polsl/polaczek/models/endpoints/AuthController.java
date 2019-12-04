@@ -108,7 +108,7 @@ public class AuthController {
         final Survey survey = new Survey(newModelDto.getFirstName(), newModelDto.getLastName(), newModelDto.getAge(),
                 newModelDto.getGender(), newModelDto.getRegion(), newModelDto.getCity(), newModelDto.getPhoneNumber());
 
-        final Model model = new Model(newModelDto.getEyesColor(), newModelDto.getHairColor(), survey);
+        final Model model = new Model(survey);
 
         // Create new user's account
         final User user = new User(newModelDto.getUsername(),

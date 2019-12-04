@@ -69,7 +69,7 @@ public class ModelService {
 
         surveyRepository.save(survey);
 
-        final Model model = new Model(dto.getEyesColor(), dto.getHairColor(), survey);
+        final Model model = new Model(survey);
         model.setUser(user);
 
         return modelRepository.save(model);

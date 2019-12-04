@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -23,14 +24,10 @@ public class Model {
     @OneToOne
     private User user;
 
-    @NonNull
-    @NotBlank
     @Column(nullable = false, length = 64)
     @Size(max = 64)
     private String eyesColor;
 
-    @NonNull
-    @NotBlank
     @Column(nullable = false, length = 64)
     @Size(max = 64)
     private String hairColor;
@@ -38,4 +35,10 @@ public class Model {
     @OneToOne(cascade = CascadeType.ALL)
     @NonNull
     private Survey survey;
+
+    @PrePersist
+    private void setHairAndEyesColor() {
+        hairColor = "-";
+        eyesColor = "-";
+    }
 }

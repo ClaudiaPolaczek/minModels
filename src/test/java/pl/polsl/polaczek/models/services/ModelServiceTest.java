@@ -43,7 +43,7 @@ public class ModelServiceTest {
     private Survey survey = new Survey("First", "Last", 20, 'M',
             "Slaskie", "Cracow", "123456789");
 
-    private Model model = new Model("blue", "brown", survey);
+    private Model model = new Model(survey);
 
     private NewModelDto newModelDto = new NewModelDto();
 
@@ -147,9 +147,9 @@ public class ModelServiceTest {
 
         //given
         List<Model> models = Lists.newArrayList(
-                new Model("blue","brown",survey),
-                new Model("blue","brown", survey),
-                new Model("blue","brown", survey)
+                new Model(survey),
+                new Model(survey),
+                new Model(survey)
         );
 
         given(modelRepository.findAll()).willReturn(models);
@@ -179,7 +179,7 @@ public class ModelServiceTest {
         Survey survey = new Survey("First", "Last", 20, 'M',
                 "Slaskie", "Cracow", "123456789");
 
-        Model model = new Model("blue","brown",survey);
+        Model model = new Model(survey);
         model.setUser(user);
 
         given(modelRepository.findByUser_Username(user.getUsername())).willReturn(Optional.of(model));

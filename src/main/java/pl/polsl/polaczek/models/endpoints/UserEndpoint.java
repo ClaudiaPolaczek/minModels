@@ -119,4 +119,13 @@ public class UserEndpoint {
 
         userRepository.deleteById(username);
     }
+
+    @DeleteMapping("/delete/u/{username}")
+    public void deleteUserWithNoRole(@PathVariable String username){
+
+        userRepository.findById(username).orElseThrow(()
+                -> new EntityDoesNotExistException("User","id",username));
+
+        userRepository.deleteById(username);
+    }
 }

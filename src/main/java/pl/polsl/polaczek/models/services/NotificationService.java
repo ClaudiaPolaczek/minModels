@@ -35,6 +35,14 @@ public class NotificationService {
         return notificationRepository.findAllByUser_Username(username);
     }
 
+    public List<Notification> getNonRead(String username){
+
+        userRepository.findById(username).orElseThrow(()
+                -> new EntityDoesNotExistException("User","username",username));
+
+        return notificationRepository.findAllByUser_UsernameAndReadValue(username,0);
+    }
+
     public Notification get(Long id){
         return notificationRepository.findById(id).orElseThrow(()
                 -> new EntityDoesNotExistException("Notification","id",id.toString()));

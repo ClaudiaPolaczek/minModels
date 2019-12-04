@@ -3,6 +3,7 @@ package pl.polsl.polaczek.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -23,8 +24,11 @@ public class Notification {
 
     private Integer readValue;
 
+    private LocalDateTime addedDate;
+
     @PrePersist
     private void setRead() {
         readValue = 0;
+        addedDate = LocalDateTime.now();
     }
 }
