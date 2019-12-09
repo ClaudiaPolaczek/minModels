@@ -15,4 +15,7 @@ public class ImageDto {
 
     @NotNull
     private String fileUrl;
+
+    @NotNull
+    private String name;
 }

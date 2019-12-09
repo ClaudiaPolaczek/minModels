@@ -32,7 +32,7 @@ public class Survey {
     private String lastName;
 
     @NonNull
-    private Integer age;
+    private Integer birthdayYear;
 
     @NonNull
     private Character gender;

@@ -23,6 +23,9 @@ public class Image {
     @NonNull
     private String fileUrl;
 
+    @NonNull
+    private String name;
+
     @Column(nullable = false)
     private LocalDateTime addedDate;
 

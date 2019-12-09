@@ -1,11 +1,9 @@
 package pl.polsl.polaczek.models.dto;
 
 import lombok.Data;
-import lombok.NonNull;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data

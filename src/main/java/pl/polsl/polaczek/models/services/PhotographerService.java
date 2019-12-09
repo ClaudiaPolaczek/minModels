@@ -68,7 +68,7 @@ public class PhotographerService {
 
        // final Survey survey = surveyService.add(dto);
 
-        final Survey survey = new Survey(dto.getFirstName(), dto.getLastName(), dto.getAge(),
+        final Survey survey = new Survey(dto.getFirstName(), dto.getLastName(), dto.getBirthdayYear(),
                 dto.getGender(), dto.getRegion(), dto.getCity(), dto.getPhoneNumber());
 
         surveyRepository.save(survey);
@@ -91,6 +91,7 @@ public class PhotographerService {
         survey.setRegion(dto.getRegion());
         survey.setCity(dto.getCity());
         survey.setPhoneNumber(dto.getPhoneNumber());
+        survey.setBirthdayYear(dto.getBirthdayYear());
 
         surveyRepository.save(survey);
         userRepository.save(user);

@@ -7,6 +7,9 @@ import pl.polsl.polaczek.models.dao.CommentRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.CommentDto;
 import pl.polsl.polaczek.models.entities.Comment;
+import pl.polsl.polaczek.models.entities.Image;
+import pl.polsl.polaczek.models.entities.URole;
+import pl.polsl.polaczek.models.entities.User;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
@@ -67,18 +70,40 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    public List<User> getAvgOfRating(){
+
+        List<User> users = userRepository.findAll();
+        Double sum = 0.0;
+        Double avg = 0.0;
+
+        for(User user: users){
+            if(user.getRole()!= URole.ADMIN) {
+                List<Comment> comments = commentRepository.findAllByRatedUser_Username(user.getUsername());
+                if(comments.size()!=0) {
+                    sum = 0.0;
+                    for (Comment comment : comments) {
+                        sum += comment.getRating();
+                    }
+                    avg = sum / comments.size();
+                    user.setAvgRate(avg);
+                    userRepository.save(user);
+                }
+            }
+        }
+        return users;
+    }
+
     private Comment convertToEntity(CommentDto dto) {
 
+        User user = userRepository.findById(dto.getRatedUserUsername()).orElseThrow(()
+                -> new BadRequestException("User", "id", dto.getRatingUserUsername(), "does not exist"));
+
         Comment comment = new Comment(userRepository.findById(dto.getRatingUserUsername()).orElseThrow
-                (() -> new BadRequestException("User", "id", dto.getRatedUserUsername(), "does not exist")),
-                userRepository.findById(dto.getRatedUserUsername()).orElseThrow(()
-                        -> new BadRequestException("User", "id", dto.getRatingUserUsername(), "does not exist")),
+                (() -> new BadRequestException("User", "id", dto.getRatedUserUsername(), "does not exist")), user,
                 dto.getRating());
 
         comment.setContent(dto.getContent());
-
         return comment;
-
     }
 
     public void delete(@NonNull Long id){

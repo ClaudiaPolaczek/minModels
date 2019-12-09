@@ -105,7 +105,7 @@ public class AuthController {
             throw new BadRequestException("Model", "gender", newModelDto.getGender().toString(),
                     "Model's gender should be either W or M");
 
-        final Survey survey = new Survey(newModelDto.getFirstName(), newModelDto.getLastName(), newModelDto.getAge(),
+        final Survey survey = new Survey(newModelDto.getFirstName(), newModelDto.getLastName(), newModelDto.getBirthdayYear(),
                 newModelDto.getGender(), newModelDto.getRegion(), newModelDto.getCity(), newModelDto.getPhoneNumber());
 
         final Model model = new Model(survey);
@@ -135,7 +135,7 @@ public class AuthController {
             throw new BadRequestException("Photographer", "gender", newPhotographerDto.getGender().toString(),
                     "Model's gender should be either W or M");
 
-        final Survey survey = new Survey(newPhotographerDto.getFirstName(), newPhotographerDto.getLastName(), newPhotographerDto.getAge(),
+        final Survey survey = new Survey(newPhotographerDto.getFirstName(), newPhotographerDto.getLastName(), newPhotographerDto.getBirthdayYear(),
                 newPhotographerDto.getGender(), newPhotographerDto.getRegion(), newPhotographerDto.getCity(), newPhotographerDto.getPhoneNumber());
 
         final Photographer photographer = new Photographer(survey);

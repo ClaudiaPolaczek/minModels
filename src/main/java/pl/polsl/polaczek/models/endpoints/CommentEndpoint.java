@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.dto.CommentDto;
 import pl.polsl.polaczek.models.entities.Comment;
+import pl.polsl.polaczek.models.entities.User;
 import pl.polsl.polaczek.models.services.CommentService;
 
 import javax.validation.Valid;
@@ -45,6 +46,11 @@ public class CommentEndpoint {
     @GetMapping("/rated/{ratedUserUsername}")
     public List<Comment> getAllCommentByRatedUser(@PathVariable String ratedUserUsername){
         return commentService.getCommentsByRatedUser(ratedUserUsername);
+    }
+
+    @PatchMapping("/avg")
+    public List<User> getAvgOfRating(){
+        return commentService.getAvgOfRating();
     }
 
     @PostMapping

@@ -39,7 +39,6 @@ public class ImageEndpoint {
     @DeleteMapping("/deleteFile/{id}")
     public String deleteFile(@PathVariable Long id) {
         return portfolioService.deleteImage(id);
-//        return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
     }
 
 

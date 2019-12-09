@@ -40,7 +40,7 @@ public class ModelServiceTest {
 
     private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
-    private Survey survey = new Survey("First", "Last", 20, 'M',
+    private Survey survey = new Survey("First", "Last", 1997, 'M',
             "Slaskie", "Cracow", "123456789");
 
     private Model model = new Model(survey);
@@ -68,7 +68,7 @@ public class ModelServiceTest {
 
         newModelDto.setUsername(user.getUsername());
         newModelDto.setPassword(user.getPassword());
-        newModelDto.setAge(survey.getAge());
+        newModelDto.setBirthdayYear(survey.getBirthdayYear());
         newModelDto.setGender(survey.getGender());
         newModelDto.setFirstName(survey.getFirstName());
         newModelDto.setLastName(survey.getLastName());
@@ -176,7 +176,7 @@ public class ModelServiceTest {
         //given
         User user = new User("TestedUsername", "Password", URole.PHOTOGRAPHER);
 
-        Survey survey = new Survey("First", "Last", 20, 'M',
+        Survey survey = new Survey("First", "Last", 1997, 'M',
                 "Slaskie", "Cracow", "123456789");
 
         Model model = new Model(survey);

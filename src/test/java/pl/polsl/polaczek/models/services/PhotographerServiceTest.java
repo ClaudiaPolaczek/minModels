@@ -45,7 +45,7 @@ public class PhotographerServiceTest {
 
     private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
-    private Survey survey = new Survey("First", "Last", 20, 'M',
+    private Survey survey = new Survey("First", "Last", 1997, 'M',
             "Slaskie", "Cracow", "123456789");
 
     private Photographer photographer = new Photographer(survey);
@@ -73,7 +73,7 @@ public class PhotographerServiceTest {
 
         newPhotographerDto.setUsername(user.getUsername());
         newPhotographerDto.setPassword(user.getPassword());
-        newPhotographerDto.setAge(survey.getAge());
+        newPhotographerDto.setBirthdayYear(survey.getBirthdayYear());
         newPhotographerDto.setGender(survey.getGender());
         newPhotographerDto.setFirstName(survey.getFirstName());
         newPhotographerDto.setLastName(survey.getLastName());
@@ -178,7 +178,7 @@ public class PhotographerServiceTest {
         //given
         User user = new User("TestedUsername", "Password", URole.PHOTOGRAPHER);
 
-        Survey survey = new Survey("First", "Last", 20, 'M',
+        Survey survey = new Survey("First", "Last", 1997, 'M',
                 "Slaskie", "Cracow", "123456789");
 
         Photographer photographer = new Photographer(survey);

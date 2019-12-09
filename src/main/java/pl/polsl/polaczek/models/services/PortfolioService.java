@@ -71,18 +71,15 @@ public class PortfolioService {
     }
 
     public Image addImage(@NonNull ImageDto imageDto){
-
         return convertImageDtoToEntity(imageDto);
     }
 
     private Image convertImageDtoToEntity(ImageDto dto) {
-
         Image image = new Image(portfolioRepository.findById(dto.getPortfolioId()).orElseThrow
                 (() -> new BadRequestException("Portfolio", "id", dto.getPortfolioId().toString(), "does not exist")),
-                dto.getFileUrl());
+                dto.getFileUrl(), dto.getName());
 
         imageRepository.save(image);
-
         return image;
     }
 
@@ -117,16 +114,21 @@ public class PortfolioService {
 
         String message = this.amazonClient.deleteFileFromS3Bucket(image.getFileUrl());
 
-        imageRepository.deleteById(id);
+        if(image.getPortfolio().getMainPhotoUrl().equals(image.getFileUrl()))  image.getPortfolio().setMainPhotoUrl(null);
 
+        if(image.getPortfolio().getUser().getMainPhotoUrl().equals(image.getFileUrl())) image.getPortfolio().getUser().setMainPhotoUrl(null);
+
+        imageRepository.save(image);
+        imageRepository.deleteById(id);
         return message;
     }
 
     public void deleteImageByUrl(@NonNull String url){
 
-        List<Image> images = imageRepository.findAllByFileUrl(url);
+        List<Image> images = imageRepository.findAllByName(url);
 
         for(Image image: images){
+            this.amazonClient.deleteFileFromS3Bucket(image.getFileUrl());
             imageRepository.delete(image);
         }
     }

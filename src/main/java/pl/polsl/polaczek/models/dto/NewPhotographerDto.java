@@ -20,7 +20,7 @@ public class NewPhotographerDto {
     @NotBlank
     private String lastName;
 
-    private Integer age;
+    private Integer birthdayYear;
 
     private Character gender;
 

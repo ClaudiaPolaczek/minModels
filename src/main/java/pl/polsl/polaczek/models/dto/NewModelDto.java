@@ -18,7 +18,7 @@ public class NewModelDto {
     @NotBlank
     private String lastName;
 
-    private Integer age;
+    private Integer birthdayYear;
 
     private Character gender;
 

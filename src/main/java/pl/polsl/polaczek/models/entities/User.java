@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,13 @@ public class User{
     private URole role;
 
     private String mainPhotoUrl;
+
+    private Double avgRate;
+
+    @PrePersist
+    private void setAvg() {
+        avgRate = 0.0;
+    }
 
     public URole getRole() {
         return role;
@@ -55,5 +63,13 @@ public class User{
 
     public void setMainPhotoUrl(String mainPhotoUrl) {
         this.mainPhotoUrl = mainPhotoUrl;
+    }
+
+    public Double getAvgRate() {
+        return avgRate;
+    }
+
+    public void setAvgRate(Double avgRate) {
+        this.avgRate = avgRate;
     }
 }
