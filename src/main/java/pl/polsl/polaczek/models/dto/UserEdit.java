@@ -13,6 +13,8 @@ public class UserEdit {
 
     private String firstName;
 
+    private String instagramName;
+
     private String lastName;
 
     private Integer birthdayYear;

@@ -8,6 +8,7 @@ import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.ImageDto;
+import pl.polsl.polaczek.models.dto.UserEdit;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 import pl.polsl.polaczek.models.services.CommentService;
@@ -63,9 +64,16 @@ public class UserEndpoint {
 
         User user = userRepository.findById(username).orElseThrow(()
                 -> new EntityDoesNotExistException("User","id",username));
-
         user.setMainPhotoUrl(dto.getFileUrl());
+        return userRepository.save(user);
+    }
 
+    @PatchMapping("/instagram/{username}")
+    public User editInstagramName(@PathVariable String username, @Valid @RequestBody UserEdit dto){
+
+        User user = userRepository.findById(username).orElseThrow(()
+                -> new EntityDoesNotExistException("User","id",username));
+        user.setInstagramName(dto.getInstagramName());
         return userRepository.save(user);
     }
 
