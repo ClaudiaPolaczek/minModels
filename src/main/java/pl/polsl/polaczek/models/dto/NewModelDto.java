@@ -34,4 +34,6 @@ public class NewModelDto {
     private String hairColor;
 
     private String eyesColor;
+
+    private Integer regulationsAgreement;
 }

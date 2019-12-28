@@ -106,7 +106,7 @@ public class AuthController {
                     "Model's gender should be either W or M");
 
         final Survey survey = new Survey(newModelDto.getFirstName(), newModelDto.getLastName(), newModelDto.getBirthdayYear(),
-                newModelDto.getGender(), newModelDto.getRegion(), newModelDto.getCity(), newModelDto.getPhoneNumber());
+                newModelDto.getGender(), newModelDto.getRegion(), newModelDto.getCity(), newModelDto.getPhoneNumber(), newModelDto.getRegulationsAgreement());
 
         final Model model = new Model(survey);
 
@@ -128,7 +128,7 @@ public class AuthController {
         if (userRepository.existsByUsername(newPhotographerDto.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body( new BadRequestException("User", "username", newPhotographerDto.getUsername(), "already exist"));
+                    .body(new BadRequestException("User", "username", newPhotographerDto.getUsername(), "already exist"));
         }
 
         if(newPhotographerDto.getGender() != 'M' && newPhotographerDto.getGender() != 'W')
@@ -136,7 +136,7 @@ public class AuthController {
                     "Model's gender should be either W or M");
 
         final Survey survey = new Survey(newPhotographerDto.getFirstName(), newPhotographerDto.getLastName(), newPhotographerDto.getBirthdayYear(),
-                newPhotographerDto.getGender(), newPhotographerDto.getRegion(), newPhotographerDto.getCity(), newPhotographerDto.getPhoneNumber());
+                newPhotographerDto.getGender(), newPhotographerDto.getRegion(), newPhotographerDto.getCity(), newPhotographerDto.getPhoneNumber(), newPhotographerDto.getRegulationsAgreement());
 
         final Photographer photographer = new Photographer(survey);
 

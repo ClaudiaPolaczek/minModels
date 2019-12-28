@@ -2,12 +2,10 @@ package pl.polsl.polaczek.models.entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -55,4 +53,8 @@ public class Survey {
     @Size(min = 9, max = 16)
     private String phoneNumber;
 
+    private String instagramName;
+
+    @NonNull
+    private Integer regulationsAgreement;
 }

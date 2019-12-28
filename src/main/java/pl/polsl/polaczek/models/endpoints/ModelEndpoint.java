@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.dto.NewModelDto;
 import pl.polsl.polaczek.models.dto.UserEdit;
 import pl.polsl.polaczek.models.entities.Model;
+import pl.polsl.polaczek.models.entities.User;
+import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 import pl.polsl.polaczek.models.services.ModelService;
 
 import javax.validation.Valid;
@@ -41,6 +43,11 @@ public class ModelEndpoint {
     @PatchMapping("/{username}")
     public Model editModel(@PathVariable String username, @Valid @RequestBody UserEdit newModelDto){
             return modelService.edit(username, newModelDto);
+    }
+
+    @PatchMapping("/instagram/{username}")
+    public Model editInstagramName(@PathVariable String username, @Valid @RequestBody UserEdit newModelDto){
+        return modelService.editInstagramName(username, newModelDto);
     }
 
     @PostMapping

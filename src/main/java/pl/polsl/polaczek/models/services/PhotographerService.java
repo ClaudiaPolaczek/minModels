@@ -69,7 +69,7 @@ public class PhotographerService {
        // final Survey survey = surveyService.add(dto);
 
         final Survey survey = new Survey(dto.getFirstName(), dto.getLastName(), dto.getBirthdayYear(),
-                dto.getGender(), dto.getRegion(), dto.getCity(), dto.getPhoneNumber());
+                dto.getGender(), dto.getRegion(), dto.getCity(), dto.getPhoneNumber(), dto.getRegulationsAgreement());
 
         surveyRepository.save(survey);
 
@@ -96,6 +96,17 @@ public class PhotographerService {
         surveyRepository.save(survey);
         userRepository.save(user);
 
+        return photographerRepository.save(photographer);
+    }
+
+    public Photographer editInstagramName(String username, @NonNull UserEdit dto){
+
+        Photographer photographer = photographerRepository.findByUser_Username(username)
+                .orElseThrow(() -> new EntityDoesNotExistException("Photographer", "username", username));
+
+        Survey survey = photographer.getSurvey();
+        survey.setInstagramName(dto.getInstagramName());
+        surveyRepository.save(survey);
         return photographerRepository.save(photographer);
     }
 

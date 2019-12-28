@@ -65,7 +65,7 @@ public class ModelService {
         //final Survey survey = surveyService.add(dto);
 
         final Survey survey = new Survey(dto.getFirstName(), dto.getLastName(), dto.getBirthdayYear(),
-                dto.getGender(), dto.getRegion(), dto.getCity(), dto.getPhoneNumber());
+                dto.getGender(), dto.getRegion(), dto.getCity(), dto.getPhoneNumber(), dto.getRegulationsAgreement());
 
         surveyRepository.save(survey);
 
@@ -95,6 +95,17 @@ public class ModelService {
         surveyRepository.save(survey);
         userRepository.save(user);
 
+        return modelRepository.save(model);
+    }
+
+    public Model editInstagramName(String username, @NonNull UserEdit dto){
+
+        Model model = modelRepository.findByUser_Username(username)
+                .orElseThrow(() -> new EntityDoesNotExistException("Model", "username", username));
+
+        Survey survey = model.getSurvey();
+        survey.setInstagramName(dto.getInstagramName());
+        surveyRepository.save(survey);
         return modelRepository.save(model);
     }
 

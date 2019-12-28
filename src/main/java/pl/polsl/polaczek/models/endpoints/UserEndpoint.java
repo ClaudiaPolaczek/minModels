@@ -68,15 +68,6 @@ public class UserEndpoint {
         return userRepository.save(user);
     }
 
-    @PatchMapping("/instagram/{username}")
-    public User editInstagramName(@PathVariable String username, @Valid @RequestBody UserEdit dto){
-
-        User user = userRepository.findById(username).orElseThrow(()
-                -> new EntityDoesNotExistException("User","id",username));
-        user.setInstagramName(dto.getInstagramName());
-        return userRepository.save(user);
-    }
-
     @DeleteMapping("/delete/{username}")
     public void deleteUser(@PathVariable String username){
         User user = userRepository.findById(username).orElseThrow(()

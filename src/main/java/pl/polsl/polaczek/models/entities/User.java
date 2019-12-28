@@ -30,8 +30,6 @@ public class User{
 
     private String mainPhotoUrl;
 
-    private String instagramName;
-
     private Double avgRate;
 
     @PrePersist
@@ -65,14 +63,6 @@ public class User{
 
     public void setMainPhotoUrl(String mainPhotoUrl) {
         this.mainPhotoUrl = mainPhotoUrl;
-    }
-
-    public String getInstagramName() {
-        return instagramName;
-    }
-
-    public void setInstagramName(String instagramName) {
-        this.instagramName = instagramName;
     }
 
     public Double getAvgRate() {

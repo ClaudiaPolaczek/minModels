@@ -32,4 +32,6 @@ public class NewPhotographerDto {
 
     @NotBlank
     private String phoneNumber;
+
+    private Integer regulationsAgreement;
 }

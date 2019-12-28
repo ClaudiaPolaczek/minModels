@@ -10,6 +10,7 @@ import pl.polsl.polaczek.models.services.PhotoShootService;
 import javax.annotation.PostConstruct;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping(value = "photoshoots", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,6 +53,13 @@ public class PhotoShootEndpoint {
     @GetMapping("/invited/{invitedUserUsername}")
     public List<PhotoShoot> getAllByInvitedUserUsername(@PathVariable String invitedUserUsername){
         return  photoShootService.getAllByInvitedUserUsername(invitedUserUsername);
+    }
+
+    @GetMapping("/all/{username}")
+    public List<PhotoShoot> getAllForUser(@PathVariable String username){
+        List<PhotoShoot> photoShoots = photoShootService.getAllByInvitedUserUsername(username);
+        photoShoots.addAll(photoShootService.getAllByInvitingUserUsername(username));
+        return photoShoots;
     }
 
     @PostMapping
