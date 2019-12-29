@@ -5,9 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Data
@@ -24,6 +22,7 @@ public class Portfolio {
     private User user;
 
     @NonNull
+    @NotBlank
     @Column(nullable = false, length =  64)
     @Size(max = 64)
     private String name;

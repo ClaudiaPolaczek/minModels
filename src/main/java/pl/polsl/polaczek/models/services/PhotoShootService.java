@@ -49,7 +49,15 @@ public class PhotoShootService {
         userRepository.findById(invitingUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",invitingUserUsername));
 
-        return photoShootRepository.findAllByInvitingUser_Username(invitingUserUsername);
+        List<PhotoShoot> photoShoots = photoShootRepository.findAllByInvitingUser_Username(invitingUserUsername);
+        LocalDateTime now = LocalDateTime.now();
+
+        for(PhotoShoot photoShoot : photoShoots){
+            if(photoShoot.getMeetingDate().compareTo(now)<0){
+                end(photoShoot.getId());
+            }
+        }
+        return photoShoots;
     }
 
     public List<PhotoShoot> getAllForUser(String username){
@@ -65,15 +73,19 @@ public class PhotoShootService {
         userRepository.findById(invitedUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",invitedUserUsername));
 
-        return photoShootRepository.findAllByInvitedUser_Username(invitedUserUsername);
+        List<PhotoShoot> photoShoots = photoShootRepository.findAllByInvitedUser_Username(invitedUserUsername);
+        LocalDateTime now = LocalDateTime.now();
+
+        for(PhotoShoot photoShoot : photoShoots){
+            if(photoShoot.getMeetingDate().compareTo(now)<0){
+                end(photoShoot.getId());
+            }
+        }
+
+        return photoShoots;
     }
 
     public PhotoShoot register(@NonNull PhotoShootRegistrationDto photoShootRegistrationDto){
-
-       /* if(photoShootRegistrationDto.getMeetingDate().isBefore(LocalDateTime.now())) {
-            throw new BadRequestException("Photo Shoot", "Meeting Date",
-                    photoShootRegistrationDto.getMeetingDate().toString(), "need to be in future");
-        }*/
 
         PhotoShoot photoShoot = convertToEntity(photoShootRegistrationDto);
         return photoShootRepository.save(photoShoot);
@@ -88,7 +100,6 @@ public class PhotoShootService {
                 PhotoShootStatus.CREATED,
                 dto.getTopic(),dto.getNotes(),dto.getMeetingDate(),dto.getDuration(), dto.getCity(),
                 dto.getStreet(), dto.getHouseNumber());
-
     }
 
     public void cancel(@NonNull Long photoShootId){
@@ -106,11 +117,6 @@ public class PhotoShootService {
     }
 
     public void accept(@NonNull Long photoShootId){
-        /*photoShootRepository.findById(photoShootId).map(photoShoot -> {
-            photoShoot.setPhotoShootStatus(PhotoShootStatus.ACCEPTED);
-            return photoShoot;
-        }).ifPresent(photoShootRepository::save);*/
-
         PhotoShoot photoShoot =  photoShootRepository.findById(photoShootId).orElseThrow(()
                 -> new EntityDoesNotExistException("Photo Shoot","id",photoShootId.toString()));
 
