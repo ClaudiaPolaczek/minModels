@@ -7,10 +7,7 @@ import pl.polsl.polaczek.models.dto.PhotoShootRegistrationDto;
 import pl.polsl.polaczek.models.entities.PhotoShoot;
 import pl.polsl.polaczek.models.services.PhotoShootService;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping(value = "photoshoots", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,16 +32,6 @@ public class PhotoShootEndpoint {
         return photoShootService.getAll();
     }
 
-//    @GetMapping("/m/{id}")
-////    public List<PhotoShoot> getAllByModel(@PathVariable Long id){
-////        return photoShootService.getAllByModel(id);
-////    }
-////
-////    @GetMapping("/p/{id}")
-////    public List<PhotoShoot> getAllByPhotographer(@PathVariable Long id){
-////        return  photoShootService.getAllByPhotographer(id);
-////    }
-
     @GetMapping("/inviting/{invitingUserUsername}")
     public List<PhotoShoot> getAllByInvitingUserUsername(@PathVariable String invitingUserUsername){
         return photoShootService.getAllByInvitingUserUsername(invitingUserUsername);
@@ -57,9 +44,7 @@ public class PhotoShootEndpoint {
 
     @GetMapping("/all/{username}")
     public List<PhotoShoot> getAllForUser(@PathVariable String username){
-        List<PhotoShoot> photoShoots = photoShootService.getAllByInvitedUserUsername(username);
-        photoShoots.addAll(photoShootService.getAllByInvitingUserUsername(username));
-        return photoShoots;
+        return  photoShootService.getAllForUser(username);
     }
 
     @PostMapping

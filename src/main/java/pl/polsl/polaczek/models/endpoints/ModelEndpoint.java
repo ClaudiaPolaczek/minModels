@@ -42,7 +42,7 @@ public class ModelEndpoint {
 
     @PatchMapping("/{username}")
     public Model editModel(@PathVariable String username, @Valid @RequestBody UserEdit newModelDto){
-            return modelService.edit(username, newModelDto);
+        return modelService.edit(username, newModelDto);
     }
 
     @PatchMapping("/instagram/{username}")

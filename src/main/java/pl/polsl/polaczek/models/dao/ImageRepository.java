@@ -9,6 +9,5 @@ import java.util.List;
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Long> {
     List<Image> findAllByPortfolio_Id(Long portfolioId);
-    List<Image> findAllByFileUrl(String fileUrl);
     List<Image> findAllByName(String name);
 }

@@ -18,11 +18,6 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
     @Autowired
     UserRepository userRepository;
 
-//    @Autowired
-//    public UserDetailsServiceImpl(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-
     @Override
     @Transactional
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
@@ -33,11 +28,6 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
     }
 
     User create(String username, String password, URole URole) {
-
-       /* if(userRepository.findById(username) != null){
-            throw new BadRequestException("User", "username", username, "already exist");
-        }*/
-
         return userRepository.save(new User(username, password, URole));
     }
 }

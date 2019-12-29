@@ -40,9 +40,6 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
-//    @Autowired
-//    PasswordEncoder encoder;
-
     @Autowired
     JwtUtils jwtUtils;
 
@@ -52,6 +49,7 @@ public class AuthController {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SurveyRepository surveyRepository;
     private final PasswordEncoder encoder;
+    private final SurveyService surveyService;
 
     @Autowired
     public AuthController(final ModelRepository modelRepository,
@@ -67,6 +65,7 @@ public class AuthController {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.surveyRepository = surveyRepository;
         this.encoder = encoder;
+        this.surveyService = surveyService;
     }
 
     @PostMapping("/signin")
@@ -105,18 +104,15 @@ public class AuthController {
             throw new BadRequestException("Model", "gender", newModelDto.getGender().toString(),
                     "Model's gender should be either W or M");
 
-        final Survey survey = new Survey(newModelDto.getFirstName(), newModelDto.getLastName(), newModelDto.getBirthdayYear(),
-                newModelDto.getGender(), newModelDto.getRegion(), newModelDto.getCity(), newModelDto.getPhoneNumber(), newModelDto.getRegulationsAgreement());
+        Survey survey = surveyService.add(newModelDto);
 
         final Model model = new Model(survey);
 
-        // Create new user's account
         final User user = new User(newModelDto.getUsername(),
                 encoder.encode(newModelDto.getPassword()), URole.MODEL);
 
         userRepository.save(user);
         model.setUser(user);
-        surveyRepository.save(survey);
         modelRepository.save(model);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
@@ -135,18 +131,15 @@ public class AuthController {
             throw new BadRequestException("Photographer", "gender", newPhotographerDto.getGender().toString(),
                     "Model's gender should be either W or M");
 
-        final Survey survey = new Survey(newPhotographerDto.getFirstName(), newPhotographerDto.getLastName(), newPhotographerDto.getBirthdayYear(),
-                newPhotographerDto.getGender(), newPhotographerDto.getRegion(), newPhotographerDto.getCity(), newPhotographerDto.getPhoneNumber(), newPhotographerDto.getRegulationsAgreement());
+        Survey survey = surveyService.add(newPhotographerDto);
 
         final Photographer photographer = new Photographer(survey);
 
-        // Create new user's account
         User user = new User(newPhotographerDto.getUsername(),
                 encoder.encode(newPhotographerDto.getPassword()), URole.PHOTOGRAPHER);
 
         userRepository.save(user);
         photographer.setUser(user);
-        surveyRepository.save(survey);
         photographerRepository.save(photographer);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
@@ -166,7 +159,6 @@ public class AuthController {
         );
 
         userRepository.save(user);
-
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
@@ -179,7 +171,6 @@ public class AuthController {
         user.setPassword(encoder.encode(newAdmin.getPassword()));
 
         userRepository.save(user);
-
         return ResponseEntity.ok(new MessageResponse("Password changed successfully!"));
     }
 }

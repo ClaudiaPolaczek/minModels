@@ -1,14 +1,14 @@
 package pl.polsl.polaczek.models.dto;
 
 import lombok.Data;
+import lombok.NonNull;
 
-import javax.validation.constraints.NotBlank;
 @Data
 public class NewAdmin {
 
-    @NotBlank
+    @NonNull
     private String username;
 
-    @NotBlank
+    @NonNull
     private String password;
 }

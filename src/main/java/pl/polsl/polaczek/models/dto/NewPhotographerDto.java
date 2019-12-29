@@ -3,34 +3,32 @@ package pl.polsl.polaczek.models.dto;
 import lombok.Data;
 import lombok.NonNull;
 
-import javax.validation.constraints.NotBlank;
-
 @Data
 public class NewPhotographerDto {
 
-    @NotBlank
+    @NonNull
     private String username;
 
-    @NotBlank
+    @NonNull
     private String password;
 
-    @NotBlank
+    @NonNull
     private String firstName;
 
-    @NotBlank
+    @NonNull
     private String lastName;
 
     private Integer birthdayYear;
 
     private Character gender;
 
-    @NotBlank
+    @NonNull
     private String region;
 
-    @NotBlank
+    @NonNull
     private String city;
 
-    @NotBlank
+    @NonNull
     private String phoneNumber;
 
     private Integer regulationsAgreement;

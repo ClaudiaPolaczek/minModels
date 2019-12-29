@@ -1,18 +1,18 @@
 package pl.polsl.polaczek.models.dto;
 
 import lombok.Data;
-import javax.validation.constraints.NotNull;
+import lombok.NonNull;
 
 @Data
 public class CommentDto {
 
-    @NotNull
+    @NonNull
     private String ratingUserUsername;
 
-    @NotNull
+    @NonNull
     private String ratedUserUsername;
 
-    @NotNull
+    @NonNull
     private Integer rating;
 
     private String content;

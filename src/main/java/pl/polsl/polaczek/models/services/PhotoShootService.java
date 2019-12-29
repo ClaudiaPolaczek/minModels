@@ -44,28 +44,20 @@ public class PhotoShootService {
         return photoShootRepository.findAll();
     }
 
-//    public List<PhotoShoot> getAllByModel(Long id){
-//
-//        modelRepository.findById(id).orElseThrow(()
-//                -> new EntityDoesNotExistException("Model","id",id.toString()));
-//
-//        return photoShootRepository.findAllByModel_Id(id);
-//    }
-//
-//    public List<PhotoShoot> getAllByPhotographer(Long id){
-//
-//        photographerRepository.findById(id).orElseThrow(()
-//                -> new EntityDoesNotExistException("Photographer","id",id.toString()));
-//
-//        return photoShootRepository.findAllByPhotographer_Id(id);
-//    }
-
     public List<PhotoShoot> getAllByInvitingUserUsername(String invitingUserUsername){
 
         userRepository.findById(invitingUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",invitingUserUsername));
 
         return photoShootRepository.findAllByInvitingUser_Username(invitingUserUsername);
+    }
+
+    public List<PhotoShoot> getAllForUser(String username){
+
+        List<PhotoShoot> photoShoots = getAllByInvitedUserUsername(username);
+        photoShoots.addAll(getAllByInvitingUserUsername(username));
+
+        return photoShoots;
     }
 
     public List<PhotoShoot> getAllByInvitedUserUsername(String invitedUserUsername){

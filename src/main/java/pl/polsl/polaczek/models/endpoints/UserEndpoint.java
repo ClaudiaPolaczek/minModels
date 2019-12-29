@@ -1,24 +1,19 @@
 package pl.polsl.polaczek.models.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.ImageDto;
-import pl.polsl.polaczek.models.dto.UserEdit;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 import pl.polsl.polaczek.models.services.CommentService;
 import pl.polsl.polaczek.models.services.PhotoShootService;
-import pl.polsl.polaczek.models.services.PhotographerService;
 import pl.polsl.polaczek.models.services.PortfolioService;
-
 import javax.validation.Valid;
 import java.util.List;
-
 
 @RequestMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
@@ -41,7 +36,6 @@ public class UserEndpoint {
 
     @Autowired
     private PortfolioService portfolioService;
-
 
     @Autowired
     UserEndpoint(UserRepository userRepository) {

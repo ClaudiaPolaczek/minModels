@@ -41,16 +41,10 @@ public class ImageEndpoint {
         return portfolioService.deleteImage(id);
     }
 
-
     @GetMapping("/{id}")
     public Image get(@PathVariable Long id){
         return portfolioService.getImage(id);
     }
-
-    /*@GetMapping("/{id}")
-    public InputStream getInputStream(@PathVariable Long id){
-        return portfolioService.getImageStream(id);
-    }*/
 
     @GetMapping
     public List<Image> getAll(){

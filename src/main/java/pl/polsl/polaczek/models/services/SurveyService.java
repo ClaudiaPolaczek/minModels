@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.polaczek.models.dao.SurveyRepository;
 import pl.polsl.polaczek.models.dto.NewPhotographerDto;
+import pl.polsl.polaczek.models.dto.NewModelDto;
 import pl.polsl.polaczek.models.entities.Survey;
 
 @Service
@@ -16,7 +17,14 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    Survey add(NewPhotographerDto dto) {
+    public Survey add(NewPhotographerDto dto) {
+        final Survey survey = new Survey(dto.getFirstName(), dto.getLastName(), dto.getBirthdayYear(),
+                dto.getGender(), dto.getRegion(), dto.getCity(), dto.getPhoneNumber(), dto.getRegulationsAgreement());
+
+        return surveyRepository.save(survey);
+    }
+
+    public Survey add(NewModelDto dto) {
         final Survey survey = new Survey(dto.getFirstName(), dto.getLastName(), dto.getBirthdayYear(),
                 dto.getGender(), dto.getRegion(), dto.getCity(), dto.getPhoneNumber(), dto.getRegulationsAgreement());
 

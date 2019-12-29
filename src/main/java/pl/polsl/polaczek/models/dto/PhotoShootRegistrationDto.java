@@ -1,38 +1,35 @@
 package pl.polsl.polaczek.models.dto;
 
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import lombok.NonNull;
 import java.time.LocalDateTime;
 
 @Data
 public class PhotoShootRegistrationDto {
 
-    @NotNull
+    @NonNull
     private String invitingUserUsername;
 
-    @NotNull
+    @NonNull
     private String invitedUserUsername;
 
-    @NotNull
+    @NonNull
     private String city;
 
-    @NotNull
+    @NonNull
     private String street;
 
-    @NotNull
+    @NonNull
     private String houseNumber;
 
-    @NotNull
+    @NonNull
     private String topic;
 
-    @NotNull
     private String notes;
 
-    @NotNull
+    @NonNull
     private LocalDateTime meetingDate;
 
-    @NotNull
+    @NonNull
     private Integer duration;
 }

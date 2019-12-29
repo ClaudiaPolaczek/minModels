@@ -62,8 +62,6 @@ public class ModelService {
             throw new BadRequestException("Model", "gender", dto.getGender().toString(),
                     "Model's gender should be either W or M");
 
-        //final Survey survey = surveyService.add(dto);
-
         final Survey survey = new Survey(dto.getFirstName(), dto.getLastName(), dto.getBirthdayYear(),
                 dto.getGender(), dto.getRegion(), dto.getCity(), dto.getPhoneNumber(), dto.getRegulationsAgreement());
 

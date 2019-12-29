@@ -2,8 +2,6 @@ package pl.polsl.polaczek.models.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-
 @Data
 public class UserEdit {
 
