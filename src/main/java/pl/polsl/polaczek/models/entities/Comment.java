@@ -3,6 +3,7 @@ package pl.polsl.polaczek.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,6 +28,7 @@ public class Comment {
     private Integer rating;
     
     @Lob
+    @Column(length =  800)
     private String content;
 
     @Column(nullable = false)

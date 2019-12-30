@@ -3,6 +3,7 @@ package pl.polsl.polaczek.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,6 +21,7 @@ public class Notification {
     private User user;
 
     @NonNull
+    @Column(length =  216)
     private String content;
 
     private Integer readValue;

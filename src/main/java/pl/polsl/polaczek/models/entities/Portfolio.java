@@ -3,8 +3,7 @@ package pl.polsl.polaczek.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,12 +22,12 @@ public class Portfolio {
 
     @NonNull
     @NotBlank
-    @Column(nullable = false, length =  64)
-    @Size(max = 64)
+    @Column(length =  64)
+    @Size(min = 3, max = 64)
     private String name;
 
-    @Column(length = 8000)
-    @Size(max = 8000)
+    @Column(length = 800)
+    @Size(max = 800)
     private String description;
 
     private String mainPhotoUrl;

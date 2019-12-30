@@ -39,8 +39,8 @@ public class PhotoShoot {
 
     @NonNull
     @Lob
-    @Column(length = 8000)
-    @Size(max = 8000)
+    @Column(length = 800)
+    @Size(max = 800)
     private String notes;
 
     @NonNull
@@ -53,19 +53,19 @@ public class PhotoShoot {
 
     @NonNull
     @NotBlank
-    @Column(nullable = false, length = 120)
-    @Size(max = 120)
+    @Column(nullable = false, length = 128)
+    @Size(max = 128)
     private String city;
 
     @NonNull
     @NotBlank
-    @Column(nullable = false, length = 120)
-    @Size(max = 120)
+    @Column(nullable = false, length = 128)
+    @Size(max = 128)
     private String street;
 
     @NonNull
     @NotBlank
-    @Column(nullable = false, length = 50)
-    @Size(max = 50)
+    @Column(nullable = false, length = 64)
+    @Size(max = 64)
     private String houseNumber;
 }
