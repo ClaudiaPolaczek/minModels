@@ -12,19 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.configurations.jwt.JwtUtils;
 import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
-import pl.polsl.polaczek.models.dao.SurveyRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.*;
-import pl.polsl.polaczek.models.dto.auth.JwtResponse;
-import pl.polsl.polaczek.models.dto.auth.LoginRequest;
-import pl.polsl.polaczek.models.dto.auth.MessageResponse;
+import pl.polsl.polaczek.models.dto.auth.*;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
-import pl.polsl.polaczek.models.services.ModelService;
 import pl.polsl.polaczek.models.services.SurveyService;
 import pl.polsl.polaczek.models.services.UserDetailsImpl;
-import pl.polsl.polaczek.models.services.UserDetailsServiceImpl;
 import pl.polsl.polaczek.models.configurations.Error;
 
 import javax.validation.Valid;
@@ -44,26 +39,17 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     private final ModelRepository modelRepository;
-    private final ModelService modelService;
     private final PhotographerRepository photographerRepository;
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
-    private final SurveyRepository surveyRepository;
     private final PasswordEncoder encoder;
     private final SurveyService surveyService;
 
     @Autowired
     public AuthController(final ModelRepository modelRepository,
-                          final ModelService modelService,
                           final PhotographerRepository photographerRepository,
-                        final UserDetailsServiceImpl userDetailsServiceImpl,
-                        final SurveyService surveyService,
-                        final SurveyRepository surveyRepository,
-                        final PasswordEncoder encoder) {
+                          final SurveyService surveyService,
+                          final PasswordEncoder encoder) {
         this.modelRepository = modelRepository;
-        this.modelService = modelService;
         this.photographerRepository = photographerRepository;
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
-        this.surveyRepository = surveyRepository;
         this.encoder = encoder;
         this.surveyService = surveyService;
     }
@@ -95,8 +81,7 @@ public class AuthController {
         }
 
         if (userRepository.existsByUsername(newModelDto.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
+            return ResponseEntity .badRequest()
                     .body( new BadRequestException("User", "username", newModelDto.getUsername(), "already exist"));
         }
 

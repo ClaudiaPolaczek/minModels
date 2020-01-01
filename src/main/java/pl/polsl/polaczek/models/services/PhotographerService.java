@@ -23,7 +23,6 @@ public class PhotographerService {
 
     private final PhotographerRepository photographerRepository;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
-    private final SurveyService surveyService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final SurveyRepository surveyRepository;
@@ -31,13 +30,11 @@ public class PhotographerService {
     @Autowired
     public PhotographerService(final PhotographerRepository photographerRepository,
                                final UserDetailsServiceImpl userDetailsServiceImpl,
-                               final SurveyService surveyService,
                                final SurveyRepository surveyRepository,
                                final PasswordEncoder passwordEncoder,
                                final UserRepository userRepository){
         this.photographerRepository = photographerRepository;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
-        this.surveyService = surveyService;
         this.surveyRepository = surveyRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;

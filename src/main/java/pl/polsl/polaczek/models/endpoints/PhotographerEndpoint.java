@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.polaczek.models.dto.NewPhotographerDto;
 import pl.polsl.polaczek.models.dto.UserEdit;
 import pl.polsl.polaczek.models.entities.Photographer;
-import pl.polsl.polaczek.models.entities.User;
-import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 import pl.polsl.polaczek.models.services.PhotographerService;
 
 import javax.validation.Valid;

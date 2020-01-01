@@ -3,9 +3,7 @@ package pl.polsl.polaczek.models.services;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.polsl.polaczek.models.dao.ModelRepository;
 import pl.polsl.polaczek.models.dao.PhotoShootRepository;
-import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.PhotoShootRegistrationDto;
 import pl.polsl.polaczek.models.entities.PhotoShoot;
@@ -20,18 +18,12 @@ import java.util.List;
 public class PhotoShootService {
 
     private final PhotoShootRepository photoShootRepository;
-    private final PhotographerRepository photographerRepository;
-    private final ModelRepository modelRepository;
     private final UserRepository userRepository;
 
     @Autowired
     public PhotoShootService(final PhotoShootRepository photoShootRepository,
-                             final PhotographerRepository photographerRepository,
-                             final ModelRepository modelRepository,
                              final UserRepository userRepository){
         this.photoShootRepository = photoShootRepository;
-        this.photographerRepository = photographerRepository;
-        this.modelRepository = modelRepository;
         this.userRepository = userRepository;
     }
 

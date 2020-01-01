@@ -24,7 +24,6 @@ public class Image {
     private String fileUrl;
 
     @NonNull
-    @Column(length =  216)
     private String name;
 
     @Column(nullable = false)

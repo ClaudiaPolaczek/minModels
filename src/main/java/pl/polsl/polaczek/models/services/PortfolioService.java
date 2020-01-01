@@ -23,7 +23,6 @@ public class PortfolioService {
     private final UserRepository userRepository;
     private AmazonClient amazonClient;
 
-
     @Autowired
     public PortfolioService(final PortfolioRepository portfolioRepository, final ImageRepository imageRepository,
                             final UserRepository userRepository, AmazonClient amazonClient){
@@ -46,10 +45,6 @@ public class PortfolioService {
         userRepository.findById(username).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",username));
 
-//        return userRepository.findById(username)
-//                .map(user -> portfolioRepository.findAllByUser_Username(user.getUsername()))
-//                .orElseThrow();
-
         return portfolioRepository.findAllByUser_Username(username);
     }
 
@@ -64,7 +59,7 @@ public class PortfolioService {
 
     public List<Image> getAllImagesByPortfolio(Long portfolioId){
 
-        Portfolio portfolio = portfolioRepository.findById(portfolioId)
+        portfolioRepository.findById(portfolioId)
                 .orElseThrow(() -> new EntityDoesNotExistException("Portfolio", "id", portfolioId.toString()));
 
         return imageRepository.findAllByPortfolio_Id(portfolioId);
@@ -84,7 +79,6 @@ public class PortfolioService {
     }
 
     public Portfolio addPortfolio(@NonNull PortfolioDto portfolioDto){
-
         Portfolio portfolio = convertPortfolioDtoToEntity(portfolioDto);
         return portfolioRepository.save(portfolio);
     }
@@ -100,11 +94,14 @@ public class PortfolioService {
     }
 
     public void deletePortfolio(@NonNull Long id){
-        portfolioRepository.findById(id).orElseThrow(()
+        Portfolio portfolio = portfolioRepository.findById(id).orElseThrow(()
                 -> new EntityDoesNotExistException("Portfolio","id",id.toString()));
 
-        //usuniecie zdjec
+        List<Image> images = imageRepository.findAllByPortfolio_Id(id);
 
+        for(Image image: images){
+            deleteImage(image.getId());
+        }
         portfolioRepository.deleteById(id);
     }
 
@@ -115,7 +112,6 @@ public class PortfolioService {
         String message = this.amazonClient.deleteFileFromS3Bucket(image.getFileUrl());
 
         if(image.getPortfolio().getMainPhotoUrl().equals(image.getFileUrl()))  image.getPortfolio().setMainPhotoUrl(null);
-
         if(image.getPortfolio().getUser().getMainPhotoUrl().equals(image.getFileUrl())) image.getPortfolio().getUser().setMainPhotoUrl(null);
 
         imageRepository.save(image);
@@ -153,7 +149,4 @@ public class PortfolioService {
 
         return portfolioRepository.save(portfolio);
     }
-
-
-
 }

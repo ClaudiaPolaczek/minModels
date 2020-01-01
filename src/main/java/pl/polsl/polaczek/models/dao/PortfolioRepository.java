@@ -10,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
-    List<Portfolio> findAllByAddedDateIsAfter(LocalDateTime addedDate);
     List<Portfolio> findAllByUser_Username(String userUsername);
 }

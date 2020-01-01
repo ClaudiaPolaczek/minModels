@@ -21,7 +21,6 @@ public class Notification {
     private User user;
 
     @NonNull
-    @Column(length =  216)
     private String content;
 
     private Integer readValue;

@@ -19,7 +19,6 @@ import java.util.List;
 public class ModelService {
     private final ModelRepository modelRepository;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
-    private final SurveyService surveyService;
     private final PasswordEncoder passwordEncoder;
     private final SurveyRepository surveyRepository;
     private final UserRepository userRepository;
@@ -27,13 +26,11 @@ public class ModelService {
     @Autowired
     public ModelService(final ModelRepository modelRepository,
                                final UserDetailsServiceImpl userDetailsServiceImpl,
-                               final SurveyService surveyService,
                                final SurveyRepository surveyRepository,
                                final PasswordEncoder passwordEncoder,
                                 final UserRepository userRepository){
         this.modelRepository = modelRepository;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
-        this.surveyService = surveyService;
         this.surveyRepository = surveyRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;

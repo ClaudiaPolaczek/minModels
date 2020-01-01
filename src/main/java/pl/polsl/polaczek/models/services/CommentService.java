@@ -7,7 +7,6 @@ import pl.polsl.polaczek.models.dao.CommentRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
 import pl.polsl.polaczek.models.dto.CommentDto;
 import pl.polsl.polaczek.models.entities.Comment;
-import pl.polsl.polaczek.models.entities.Image;
 import pl.polsl.polaczek.models.entities.URole;
 import pl.polsl.polaczek.models.entities.User;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
@@ -73,8 +72,8 @@ public class CommentService {
     public List<User> getAvgOfRating(){
 
         List<User> users = userRepository.findAll();
-        Double sum = 0.0;
-        Double avg = 0.0;
+        Double sum;
+        Double avg;
 
         for(User user: users){
             if(user.getRole()!= URole.ADMIN) {
