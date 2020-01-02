@@ -48,12 +48,10 @@ public class PhotoShootServiceTest {
     private PhotographerRepository photographerRepository;
 
     private Survey modelSurvey = new Survey("ModelName", "ModelSurname",20, 'W',
-            "Country", "City", "123456789");
-
-    //private Model model = new Model("blue", "brown",modelSurvey);
+            "Country", "City", "123456789", 1);
 
     private Survey photographerSurvey = new Survey("ModelName", "ModelSurname",20, 'W',
-            "Country", "City", "123456789");
+            "Country", "City", "123456789", 1);
 
     //private Photographer photographer = new Photographer(photographerSurvey);
 
@@ -65,7 +63,9 @@ public class PhotoShootServiceTest {
             LocalDateTime.of(2020,1,30, 12, 0), 1,
             "City", "Street", "1");
 
-    private PhotoShootRegistrationDto photoShootRegistrationDto = new PhotoShootRegistrationDto();
+    private PhotoShootRegistrationDto photoShootRegistrationDto = new PhotoShootRegistrationDto(
+            userPhotographer.getUsername(), userModel.getUsername(),"City", "Street",
+            "1","topic", LocalDateTime.of(2020,1,30, 12, 0), 1);
 
     private static final Long NOT_EXISTING_MODEL_ID = 10L;
     private static final Long NOT_EXISTING_PHOTOGRAPHER_ID = 20L;

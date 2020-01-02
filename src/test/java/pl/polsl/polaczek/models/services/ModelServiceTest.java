@@ -41,11 +41,11 @@ public class ModelServiceTest {
     private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
     private Survey survey = new Survey("First", "Last", 1997, 'M',
-            "Slaskie", "Cracow", "123456789");
+            "Slaskie", "Cracow", "123456789",1);
 
     private Model model = new Model(survey);
 
-    private NewModelDto newModelDto = new NewModelDto();
+    private NewModelDto newModelDto;
 
     private static final Long NOT_EXISTING_MODEL_ID = 10L;
     private static final Long NOT_EXISTING_SURVEY_ID = 20L;
@@ -177,7 +177,7 @@ public class ModelServiceTest {
         User user = new User("TestedUsername", "Password", URole.PHOTOGRAPHER);
 
         Survey survey = new Survey("First", "Last", 1997, 'M',
-                "Slaskie", "Cracow", "123456789");
+                "Slaskie", "Cracow", "123456789", 1);
 
         Model model = new Model(survey);
         model.setUser(user);

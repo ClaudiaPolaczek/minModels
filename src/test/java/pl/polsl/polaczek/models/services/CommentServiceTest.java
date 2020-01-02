@@ -45,7 +45,7 @@ public class CommentServiceTest {
 
     private Comment comment= new Comment(userRating, userRated, 5);
 
-    private CommentDto commentDto = new CommentDto();
+    private CommentDto commentDto = new CommentDto(userRating.getUsername(), userRated.getUsername(), 5);
 
     private static final Long NOT_EXISTING_COMMENT_ID = 10L;
     private static final String NOT_EXISTING_USERRATING_USERNAME = "RATING";
