@@ -65,10 +65,6 @@ public class CommentServiceTest {
         given(commentRepository.findById(NOT_EXISTING_COMMENT_ID)).willReturn(Optional.empty());
 
         given(commentRepository.save(comment)).willReturn(comment);
-
-        commentDto.setRatingUserUsername(userRating.getUsername());
-        commentDto.setRatedUserUsername(userRated.getUsername());
-        commentDto.setRating(comment.getRating());
     }
 
     @Test

@@ -111,8 +111,19 @@ public class PortfolioService {
 
         String message = this.amazonClient.deleteFileFromS3Bucket(image.getFileUrl());
 
-        if(image.getPortfolio().getMainPhotoUrl().equals(image.getFileUrl()))  image.getPortfolio().setMainPhotoUrl(null);
-        if(image.getPortfolio().getUser().getMainPhotoUrl().equals(image.getFileUrl())) image.getPortfolio().getUser().setMainPhotoUrl(null);
+        String main = image.getPortfolio().getMainPhotoUrl();
+        if(main!=null) {
+            if (main.equals(image.getFileUrl())) {
+                image.getPortfolio().setMainPhotoUrl(null);
+            }
+        }
+
+        String mainProfile = image.getPortfolio().getMainPhotoUrl();
+        if(mainProfile!=null) {
+            if (mainProfile.equals(image.getFileUrl())) {
+                image.getPortfolio().getUser().setMainPhotoUrl(null);
+            }
+        }
 
         imageRepository.save(image);
         imageRepository.deleteById(id);
