@@ -47,11 +47,9 @@ public class PhotoShootServiceTest {
     @MockBean
     private PhotographerRepository photographerRepository;
 
-    private Survey modelSurvey = new Survey("ModelName", "ModelSurname",20, 'W',
-            "Country", "City", "123456789", 1);
+    private Survey modelSurvey = new Survey("ModelName", "ModelSurname",20, 'W',"Country", "City", "123456789", 1);
 
-    private Survey photographerSurvey = new Survey("ModelName", "ModelSurname",20, 'W',
-            "Country", "City", "123456789", 1);
+    private Survey photographerSurvey = new Survey("ModelName", "ModelSurname",20, 'W',"Country", "City", "123456789", 1);
 
     //private Photographer photographer = new Photographer(photographerSurvey);
 
@@ -59,13 +57,9 @@ public class PhotoShootServiceTest {
 
     private User userPhotographer  = new User("photographer", "photographer", URole.PHOTOGRAPHER);
 
-    private PhotoShoot photoShoot = new PhotoShoot(userPhotographer, userModel, PhotoShootStatus.CREATED, "topic", "notes",
-            LocalDateTime.of(2020,1,30, 12, 0), 1,
-            "City", "Street", "1");
+    private PhotoShoot photoShoot = new PhotoShoot(userPhotographer, userModel, PhotoShootStatus.CREATED, "topic", "notes", LocalDateTime.of(2020,1,30, 12, 0), 1, "City", "Street", "1");
 
-    private PhotoShootRegistrationDto photoShootRegistrationDto = new PhotoShootRegistrationDto(
-            userPhotographer.getUsername(), userModel.getUsername(),"City", "Street",
-            "1","topic", LocalDateTime.of(2020,1,30, 12, 0), 1);
+    private PhotoShootRegistrationDto photoShootRegistrationDto = new PhotoShootRegistrationDto(userPhotographer.getUsername(), userModel.getUsername(),"City", "Street","1","topic", LocalDateTime.of(2020,1,30, 12, 0), 1);
 
     private static final Long NOT_EXISTING_MODEL_ID = 10L;
     private static final Long NOT_EXISTING_PHOTOGRAPHER_ID = 20L;

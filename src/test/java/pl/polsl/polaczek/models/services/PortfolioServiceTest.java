@@ -46,11 +46,10 @@ public class PortfolioServiceTest {
     private Portfolio portfolio= new Portfolio(user, "name");
 
     private String imageInput = "C:\\Users\\Claudia\\Desktop\\_DSC9178.JPG";
-    private Image image = new Image(portfolio, imageInput);
+    private Image image = new Image(portfolio, imageInput, "_DSC9178.JPG");
 
-    private PortfolioDto portfolioDto = new PortfolioDto();
-    private ImageDto imageDto = new ImageDto();
-
+    private PortfolioDto portfolioDto = new PortfolioDto(user.getUsername(), portfolio.getName());
+    private ImageDto imageDto = new ImageDto(1L, imageInput, "_DSC9178.JPG");
 
     private static final Long NOT_EXISTING_IMAGE_ID = 10L;
     private static final Long NOT_EXISTING_PORTFOLIO_ID = 10L;
@@ -66,7 +65,6 @@ public class PortfolioServiceTest {
         given(imageRepository.findById(image.getId())).willReturn(Optional.of(image));
         given(userRepository.findById(user.getUsername())).willReturn(Optional.of(user));
 
-
         given(portfolioRepository.findById(NOT_EXISTING_PORTFOLIO_ID)).willReturn(Optional.empty());
         given(imageRepository.findById(NOT_EXISTING_IMAGE_ID)).willReturn(Optional.empty());
         given(userRepository.findById(NOT_EXISTING_USER_USERNAME)).willReturn(Optional.empty());
@@ -78,8 +76,8 @@ public class PortfolioServiceTest {
         portfolioDto.setName(portfolio.getName());
         portfolioDto.setUsername(user.getUsername());
 
-        imageDto.setTitle(image.getTitle());
-        imageDto.setFilePath(imageInput);
+        imageDto.setName(image.getName());
+        imageDto.setFileUrl(imageInput);
         imageDto.setPortfolioId(portfolio.getId());
     }
 
@@ -265,9 +263,9 @@ public class PortfolioServiceTest {
     public void shouldGetAllImages() {
         //given
         List<Image> images = Lists.newArrayList(
-                new Image(portfolio, imageInput),
-                new Image(portfolio, imageInput),
-                new Image(portfolio, imageInput)
+                new Image(portfolio, imageInput, "_DSC9178.JPG"),
+                new Image(portfolio, imageInput, "_DSC9178.JPG"),
+                new Image(portfolio, imageInput, "_DSC9178.JPG")
         );
 
         given(imageRepository.findAll()).willReturn(images);
@@ -293,9 +291,9 @@ public class PortfolioServiceTest {
     public void shouldGetImagesByPortfolio() {
         //given
         List<Image> images = Lists.newArrayList(
-                new Image(portfolio, imageInput),
-                new Image(portfolio, imageInput),
-                new Image(portfolio, imageInput)
+                new Image(portfolio, imageInput, "_DSC9178.JPG"),
+                new Image(portfolio, imageInput, "_DSC9178.JPG"),
+                new Image(portfolio, imageInput, "_DSC9178.JPG")
         );
 
         given(imageRepository.findAllByPortfolio_Id(portfolio.getId())).willReturn(images);

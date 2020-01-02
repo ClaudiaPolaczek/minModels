@@ -40,12 +40,12 @@ public class ModelServiceTest {
 
     private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
-    private Survey survey = new Survey("First", "Last", 1997, 'M',
-            "Slaskie", "Cracow", "123456789",1);
+    private Survey survey = new Survey("First", "Last", 1997, 'M',"Slaskie", "Cracow", "123456789",1);
 
     private Model model = new Model(survey);
 
-    private NewModelDto newModelDto;
+    private NewModelDto newModelDto = new NewModelDto(user.getUsername(), user.getPassword(),survey.getFirstName(), survey.getLastName(),  survey.getRegion(),
+            survey.getCity(), survey.getPhoneNumber());
 
     private static final Long NOT_EXISTING_MODEL_ID = 10L;
     private static final Long NOT_EXISTING_SURVEY_ID = 20L;
@@ -66,17 +66,11 @@ public class ModelServiceTest {
 
         given(modelRepository.save(model)).willReturn(model);
 
-        newModelDto.setUsername(user.getUsername());
-        newModelDto.setPassword(user.getPassword());
         newModelDto.setBirthdayYear(survey.getBirthdayYear());
         newModelDto.setGender(survey.getGender());
-        newModelDto.setFirstName(survey.getFirstName());
-        newModelDto.setLastName(survey.getLastName());
-        newModelDto.setRegion(survey.getRegion());
-        newModelDto.setCity(survey.getCity());
-        newModelDto.setPhoneNumber(survey.getPhoneNumber());
         newModelDto.setHairColor(model.getHairColor());
         newModelDto.setEyesColor(model.getEyesColor());
+        newModelDto.setRegulationsAgreement(1);
     }
 
     @Test

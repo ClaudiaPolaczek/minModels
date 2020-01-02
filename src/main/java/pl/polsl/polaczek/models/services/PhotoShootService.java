@@ -11,6 +11,7 @@ import pl.polsl.polaczek.models.entities.PhotoShootStatus;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -84,6 +85,9 @@ public class PhotoShootService {
     }
 
     private PhotoShoot convertToEntity(PhotoShootRegistrationDto dto) {
+
+        LocalDateTime now = LocalDateTime.now();
+        if(now.isAfter(dto.getMeetingDate())) throw new BadRequestException("Photoshoot", "meeting date", dto.getInvitingUserUsername(), "is from past");
 
         return new PhotoShoot(userRepository.findById(dto.getInvitingUserUsername()).orElseThrow(()
                 -> new BadRequestException("User", "username", dto.getInvitingUserUsername(), "does not exist")),

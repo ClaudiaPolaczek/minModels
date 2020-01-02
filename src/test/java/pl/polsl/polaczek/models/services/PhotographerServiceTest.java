@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.polsl.polaczek.models.dao.PhotographerRepository;
 import pl.polsl.polaczek.models.dao.SurveyRepository;
 import pl.polsl.polaczek.models.dao.UserRepository;
+import pl.polsl.polaczek.models.dto.NewModelDto;
 import pl.polsl.polaczek.models.dto.NewPhotographerDto;
 import pl.polsl.polaczek.models.entities.*;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
@@ -45,12 +46,12 @@ public class PhotographerServiceTest {
 
     private User user = new User("Username", "Password", URole.PHOTOGRAPHER);
 
-    private Survey survey = new Survey("First", "Last", 1997, 'M',
-            "Slaskie", "Cracow", "123456789");
+    private Survey survey = new Survey("First", "Last", 1997, 'M',"Slaskie", "Cracow", "123456789", 1);
 
     private Photographer photographer = new Photographer(survey);
 
-    private NewPhotographerDto newPhotographerDto = new NewPhotographerDto();
+    private NewPhotographerDto newPhotographerDto = new NewPhotographerDto(user.getUsername(), user.getPassword(),survey.getFirstName(), survey.getLastName(),  survey.getRegion(),
+            survey.getCity(), survey.getPhoneNumber());
 
     private static final Long NOT_EXISTING_PHOTOGRAPHER_ID = 10L;
     private static final Long NOT_EXISTING_SURVEY_ID = 20L;
@@ -71,15 +72,9 @@ public class PhotographerServiceTest {
 
         given(photographerRepository.save(photographer)).willReturn(photographer);
 
-        newPhotographerDto.setUsername(user.getUsername());
-        newPhotographerDto.setPassword(user.getPassword());
         newPhotographerDto.setBirthdayYear(survey.getBirthdayYear());
         newPhotographerDto.setGender(survey.getGender());
-        newPhotographerDto.setFirstName(survey.getFirstName());
-        newPhotographerDto.setLastName(survey.getLastName());
-        newPhotographerDto.setRegion(survey.getRegion());
-        newPhotographerDto.setCity(survey.getCity());
-        newPhotographerDto.setPhoneNumber(survey.getPhoneNumber());
+        newPhotographerDto.setRegulationsAgreement(1);
     }
 
     @Test
@@ -179,7 +174,7 @@ public class PhotographerServiceTest {
         User user = new User("TestedUsername", "Password", URole.PHOTOGRAPHER);
 
         Survey survey = new Survey("First", "Last", 1997, 'M',
-                "Slaskie", "Cracow", "123456789");
+                "Slaskie", "Cracow", "123456789", 1);
 
         Photographer photographer = new Photographer(survey);
         photographer.setUser(user);
