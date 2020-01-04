@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
 
 @Service
@@ -21,22 +22,28 @@ public class AmazonClient {
 
     private AmazonS3 s3client;
 
-    @Value("${amazonProperties.endpointUrl}")
+    @Value("${client.endpointUrl}")
     private String endpointUrl;
 
-    @Value("${amazonProperties.bucketName}")
+    @Value("${client.bucketName}")
     private String bucketName;
 
-    @Value("${amazonProperties.accessKey}")
+    @Value("${client.accessKey}")
     private String accessKey;
 
-    @Value("${amazonProperties.secretKey}")
+    @Value("${client.secretKey}")
     private String secretKey;
 
     @PostConstruct
     private void initializeAmazon() {
+        byte[] decodedBytes = Base64.getDecoder().decode(accessKey);
+        String decodedAccessKey = new String(decodedBytes);
+
+        decodedBytes = Base64.getDecoder().decode(secretKey);
+        String decodedSecretKey = new String(decodedBytes);
+
         BasicAWSCredentials credentials = new BasicAWSCredentials(
-                accessKey, secretKey);
+                decodedAccessKey, decodedSecretKey);
         this.s3client = AmazonS3ClientBuilder.standard().withCredentials(
                 new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.EU_CENTRAL_1).build();
     }
@@ -59,7 +66,6 @@ public class AmazonClient {
     }
 
     public String uploadFile(MultipartFile multipartFile) {
-
         String fileUrl = "";
         try {
             File file = convertMultiPartToFile(multipartFile);

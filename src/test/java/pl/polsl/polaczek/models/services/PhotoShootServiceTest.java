@@ -210,6 +210,19 @@ public class PhotoShootServiceTest {
         //expect exception
     }
 
+    @Test
+    public void shouldNotAcceptButPass() {
+        //given
+        photoShoot.setPhotoShootStatus(PhotoShootStatus.ACCEPTED);
+
+        //when
+        photoShootService.accept(photoShoot.getId());
+
+        //then
+        assertThat(photoShoot.getPhotoShootStatus()).isEqualTo(PhotoShootStatus.ACCEPTED);
+        verify(photoShootRepository, never()).save(photoShoot);
+    }
+
     @Test(expected = BadRequestException.class)
     public void shouldNotAcceptPhotoShootIfCanceled() {
         //given
@@ -234,18 +247,7 @@ public class PhotoShootServiceTest {
         //expect exception
     }
 
-    @Test
-    public void shouldNotAcceptButPass() {
-        //given
-        photoShoot.setPhotoShootStatus(PhotoShootStatus.ACCEPTED);
 
-        //when
-        photoShootService.accept(photoShoot.getId());
-
-        //then
-        assertThat(photoShoot.getPhotoShootStatus()).isEqualTo(PhotoShootStatus.ACCEPTED);
-        verify(photoShootRepository, never()).save(photoShoot);
-    }
 
     @Test
     public void shouldEndPhotoShoot() {

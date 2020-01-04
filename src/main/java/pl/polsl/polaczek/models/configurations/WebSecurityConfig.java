@@ -67,24 +67,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/models/**").permitAll()
-//                .antMatchers(HttpMethod.GET, "/photographers").permitAll()
-//                .antMatchers("/comments/**").hasRole("MODEL")
-//                .anyRequest().hasRole("MODEL")
-//                .and()
-//                .formLogin().loginPage("http://localhost:8081/login").permitAll()
-//                .defaultSuccessUrl("/welcome", true)
-//                .and()
-//                .logout().logoutSuccessUrl("/").permitAll()
-////                .cors()
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .csrf().disable();
-
 }
