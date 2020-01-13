@@ -105,7 +105,6 @@ public class ModelService {
     }
 
     public void delete(@NonNull Long id){
-
         modelRepository.findById(id).orElseThrow(()
                 -> new EntityDoesNotExistException("Model","id",id.toString()));
 

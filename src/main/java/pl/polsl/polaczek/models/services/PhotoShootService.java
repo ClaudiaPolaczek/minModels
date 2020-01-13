@@ -11,7 +11,6 @@ import pl.polsl.polaczek.models.entities.PhotoShootStatus;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

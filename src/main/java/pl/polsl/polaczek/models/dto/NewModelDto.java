@@ -3,8 +3,6 @@ package pl.polsl.polaczek.models.dto;
 import lombok.Data;
 import lombok.NonNull;
 
-import javax.validation.constraints.NotBlank;
-
 @Data
 public class NewModelDto {
 

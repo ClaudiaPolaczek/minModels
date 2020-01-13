@@ -12,7 +12,6 @@ import pl.polsl.polaczek.models.entities.User;
 import pl.polsl.polaczek.models.exceptions.BadRequestException;
 import pl.polsl.polaczek.models.exceptions.EntityDoesNotExistException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,13 +27,10 @@ public class CommentService {
     }
 
     public List<Comment> get( String ratingUserUsername , String ratedUserUsername){
-
         userRepository.findById(ratingUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",ratingUserUsername));
-
         userRepository.findById(ratedUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",ratedUserUsername));
-
         return commentRepository.findAllByRatingUserUsernameAndRatedUserUsername(ratingUserUsername,ratedUserUsername);
     }
 
@@ -48,23 +44,18 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByRatingUser(String ratingUserUsername){
-
         userRepository.findById(ratingUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",ratingUserUsername));
-
         return commentRepository.findAllByRatingUser_Username(ratingUserUsername);
     }
 
     public List<Comment> getCommentsByRatedUser(String ratedUserUsername){
-
         userRepository.findById(ratedUserUsername).orElseThrow(()
                 -> new EntityDoesNotExistException("User","username",ratedUserUsername));
-
         return commentRepository.findAllByRatedUser_Username(ratedUserUsername);
     }
 
     public Comment add(@NonNull CommentDto commentDto){
-
         Comment comment = convertToEntity(commentDto);
         return commentRepository.save(comment);
     }

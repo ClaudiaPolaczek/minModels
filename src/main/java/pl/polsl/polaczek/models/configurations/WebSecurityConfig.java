@@ -24,8 +24,6 @@ import pl.polsl.polaczek.models.services.UserDetailsServiceImpl;
 @ComponentScan
 @Order(1)
 @EnableGlobalMethodSecurity(
-        // securedEnabled = true,
-        // jsr250Enabled = true,
         prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 

@@ -1,7 +1,5 @@
 package pl.polsl.polaczek.models.dto.auth;
 
-import java.util.List;
-
 public class JwtResponse {
 
     private String token;

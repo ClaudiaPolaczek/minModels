@@ -42,6 +42,7 @@ public class AmazonClient {
         decodedBytes = Base64.getDecoder().decode(secretKey);
         String decodedSecretKey = new String(decodedBytes);
 
+        
         BasicAWSCredentials credentials = new BasicAWSCredentials(
                 decodedAccessKey, decodedSecretKey);
         this.s3client = AmazonS3ClientBuilder.standard().withCredentials(

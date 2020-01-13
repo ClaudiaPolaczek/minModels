@@ -1,12 +1,8 @@
 package pl.polsl.polaczek.models.entities;
 
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor(force = true)
@@ -41,7 +37,7 @@ public class User{
         return role;
     }
 
-    public void setRoles(URole roles) {
+    public void setRoles(URole role) {
         this.role = role;
     }
 
